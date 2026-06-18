@@ -1,15 +1,15 @@
-import visa from "@/assets/pay-visa.svg.asset.json";
-import mastercard from "@/assets/pay-mastercard.svg.asset.json";
-import amex from "@/assets/pay-american-express.svg.asset.json";
-import applePay from "@/assets/pay-apple-pay.svg.asset.json";
-import googlePay from "@/assets/pay-google-pay.svg.asset.json";
+import visa from "@/assets/pay-visa.svg";
+import mastercard from "@/assets/pay-mastercard.svg";
+import amex from "@/assets/pay-american-express.svg";
+import applePay from "@/assets/pay-apple-pay.svg";
+import googlePay from "@/assets/pay-google-pay.svg";
 
 const LOGOS = [
-  { src: visa.url, alt: "Visa" },
-  { src: mastercard.url, alt: "Mastercard" },
-  { src: amex.url, alt: "American Express" },
-  { src: applePay.url, alt: "Apple Pay" },
-  { src: googlePay.url, alt: "Google Pay" },
+  { src: visa, alt: "Visa" },
+  { src: mastercard, alt: "Mastercard" },
+  { src: amex, alt: "American Express" },
+  { src: applePay, alt: "Apple Pay" },
+  { src: googlePay, alt: "Google Pay" },
 ];
 
 export function PaymentLogos({
