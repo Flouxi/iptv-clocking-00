@@ -24,7 +24,11 @@ export const createCheckoutSession = createServerFn({ method: "POST" })
     if (!product) throw new Error("Product not found");
 
     const stripeKey = process.env.STRIPE_SECRET_KEY;
-    if (!stripeKey) throw new Error("Stripe is not configured");
+    if (!stripeKey || stripeKey.includes("YOUR_STRIPE_SECRET_KEY")) {
+      throw new Error(
+        "Stripe is not configured. Please add STRIPE_SECRET_KEY to your .env file. Get it from: https://dashboard.stripe.com/apikeys"
+      );
+    }
 
     const host = getRequestHost();
     const proto = host.startsWith("localhost") ? "http" : "https";
@@ -63,21 +67,31 @@ export const createCheckoutSession = createServerFn({ method: "POST" })
     if (!res.ok) {
       const text = await res.text();
       console.error("Stripe checkout error:", res.status, text);
-      throw new Error("Could not create checkout session");
+      
+      if (res.status === 401) {
+        throw new Error("Invalid Stripe API key. Please check your STRIPE_SECRET_KEY in .env");
+      }
+      
+      throw new Error("Could not create checkout session. Please try again.");
     }
 
     const session = (await res.json()) as { id: string; url: string };
 
-    // Pre-create a pending order so we can match it back on success.
-    const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
-    await supabaseAdmin.from("orders").insert({
-      stripe_session_id: session.id,
-      product_slug: product.slug,
-      product_name: product.name,
-      amount_total: amountOre,
-      currency: "sek",
-      status: "pending",
-    });
+    // Try to create order record, but don't fail if supabase isn't configured
+    try {
+      const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+      await supabaseAdmin.from("orders").insert({
+        stripe_session_id: session.id,
+        product_slug: product.slug,
+        product_name: product.name,
+        amount_total: amountOre,
+        currency: "sek",
+        status: "pending",
+      });
+    } catch (err) {
+      console.warn("Could not save order to database:", err);
+      // Continue anyway - the webhook will handle it
+    }
 
     return { url: session.url };
   });
