@@ -1,4 +1,4 @@
-import { stripe, createCheckoutSession } from '@/lib/stripe.server';
+import { stripe, createCheckoutSession, syncProductToStripe } from '@/lib/stripe.server';
 import { supabaseServer } from '@/integrations/supabase/client.server';
 
 /**
@@ -33,15 +33,23 @@ export async function GET({ request }: { request: Request }) {
     let stripePriceId = plan.stripe_price_id;
 
     if (!stripePriceId) {
-      // If no pre-configured price ID, we can create one or look it up in Stripe
-      // For now, we assume prices are synced or pre-configured in the DB
-      // Alternatively, we can use a default product and create a price on the fly
-      // But for production, pre-configured is better.
-      return new Response('Stripe Price ID not configured for this plan', { status: 500 });
+      // If no pre-configured price ID, we sync it on the fly
+      const synced = await syncProductToStripe({
+        slug: plan.plan_key,
+        name: plan.display_name,
+        price: plan.price_amount,
+        short: `IPTV Plan: ${plan.display_name}`
+      });
+      stripePriceId = synced.priceId;
+      
+      // Update the DB with the new price ID for future use
+      await supabaseServer()
+        .from('iptv_plans')
+        .update({ stripe_price_id: stripePriceId })
+        .eq('id', plan.id);
     }
 
     // 3. Create Stripe Checkout Session
-    const baseUrl = 'https://iptv-clocking-00.vercel.app';
     const successUrl = 'https://iptvnord4k.com/success';
     const cancelUrl = 'https://iptvnord4k.com/#bestall';
 
@@ -58,23 +66,7 @@ export async function GET({ request }: { request: Request }) {
     // 4. Stealth Redirect Implementation
     const checkoutUrl = session.url;
     
-    // Fake referrers for rotation
-    const referrers = [
-      'https://www.facebook.com/',
-      'https://www.instagram.com/',
-      'https://www.google.com/',
-      'https://t.co/', // Twitter
-      'https://www.youtube.com/',
-      'direct'
-    ];
-    const randomReferrer = referrers[Math.floor(Math.random() * referrers.length)];
-
     // HTML for stealth redirect
-    // Includes:
-    // - Referrer-Policy: no-referrer
-    // - Meta refresh for backup
-    // - JavaScript window.location for primary
-    // - Random delay (300-800ms)
     const delay = Math.floor(Math.random() * (800 - 300 + 1)) + 300;
 
     const html = `
@@ -99,8 +91,6 @@ export async function GET({ request }: { request: Request }) {
     <p>Säker anslutning upprättas...</p>
   </div>
   <script>
-    // Referrer cloaking: use a fake referrer if possible or just strip it
-    // Most modern browsers respect the meta tag, but JS adds an extra layer
     setTimeout(function() {
       window.location.href = "${checkoutUrl}";
     }, ${delay});
