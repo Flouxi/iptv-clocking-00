@@ -2,11 +2,14 @@ import Stripe from 'stripe';
 
 const stripeSecretKey = process.env.STRIPE_SECRET_KEY;
 
-if (!stripeSecretKey) {
-  throw new Error('STRIPE_SECRET_KEY environment variable is not set');
-}
+// Only initialize Stripe if the key is present to avoid crashing during build or when Stripe is not needed
+export const stripe = stripeSecretKey && !stripeSecretKey.includes("YOUR_STRIPE_SECRET_KEY")
+  ? new Stripe(stripeSecretKey)
+  : null;
 
-export const stripe = new Stripe(stripeSecretKey);
+if (!stripe && process.env.NODE_ENV === 'production') {
+  console.warn('STRIPE_SECRET_KEY environment variable is not set. Stripe functionality will be unavailable.');
+}
 
 /**
  * Create or get a Stripe product for a given product slug
@@ -18,6 +21,7 @@ export async function syncProductToStripe(product: {
   description?: string;
   short?: string;
 }) {
+  if (!stripe) throw new Error("Stripe is not configured. Please set STRIPE_SECRET_KEY.");
   try {
     // Search for existing product by metadata slug
     const products = await stripe.products.list({
@@ -99,6 +103,7 @@ export async function createCheckoutSession({
   cancelUrl: string;
   customerEmail?: string;
 }) {
+  if (!stripe) throw new Error("Stripe is not configured. Please set STRIPE_SECRET_KEY.");
   try {
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ['card', 'ideal', 'bancontact', 'giropay', 'eps', 'p24'],
@@ -129,6 +134,7 @@ export function verifyWebhookSignature(
   body: string,
   signature: string
 ): Stripe.Event | null {
+  if (!stripe) return null;
   const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET;
 
   if (!webhookSecret) {

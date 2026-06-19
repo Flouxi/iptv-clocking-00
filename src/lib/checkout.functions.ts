@@ -25,8 +25,9 @@ export const createCheckoutSession = createServerFn({ method: "POST" })
 
     const stripeKey = process.env.STRIPE_SECRET_KEY;
     if (!stripeKey || stripeKey.includes("YOUR_STRIPE_SECRET_KEY")) {
+      // In a real production environment, this should be set in the deployment platform (e.g., Vercel)
       throw new Error(
-        "Stripe is not configured. Please add STRIPE_SECRET_KEY to your .env file. Get it from: https://dashboard.stripe.com/apikeys"
+        "Stripe is not configured. Please add STRIPE_SECRET_KEY to your environment variables. Get it from: https://dashboard.stripe.com/apikeys"
       );
     }
 
