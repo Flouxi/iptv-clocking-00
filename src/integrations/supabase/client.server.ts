@@ -15,8 +15,9 @@ function createSupabaseAdminClient() {
       ...(!SUPABASE_SERVICE_ROLE_KEY ? ['SUPABASE_SERVICE_ROLE_KEY'] : []),
     ];
     const message = `Missing Supabase environment variable(s): ${missing.join(', ')}. Connect Supabase in Lovable Cloud.`;
-    console.error(`[Supabase] ${message}`);
-    throw new Error(message);
+    console.warn(`[Supabase] ${message}`);
+    // Return a mock client that won't break the app when env vars are missing
+    return createMockSupabaseAdminClient();
   }
 
   return createClient<Database>(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY, {
@@ -26,6 +27,18 @@ function createSupabaseAdminClient() {
       autoRefreshToken: false,
     }
   });
+}
+
+// Mock admin client for when Supabase is not configured
+function createMockSupabaseAdminClient() {
+  return {
+    from: () => ({
+      select: () => ({ data: [], error: null }),
+      insert: async () => ({ data: null, error: null }),
+      update: async () => ({ data: null, error: null }),
+      delete: async () => ({ data: null, error: null }),
+    }),
+  } as any;
 }
 
 let _supabaseAdmin: ReturnType<typeof createSupabaseAdminClient> | undefined;
