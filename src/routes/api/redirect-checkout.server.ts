@@ -13,25 +13,37 @@ import { supabaseServer } from '@/integrations/supabase/client.server';
  * keeping both sites completely independent for privacy reasons.
  */
 export async function POST({ request }: { request: Request }) {
+  // Handle CORS preflight requests
+  if (request.method === 'OPTIONS') {
+    return new Response(null, {
+      status: 204,
+      headers: {
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Methods': 'POST, OPTIONS',
+        'Access-Control-Allow-Headers': 'Content-Type',
+      },
+    });
+  }
+
   try {
     const body = await request.json();
     const { price, customerEmail, origin } = body;
 
     // Validate price parameter
     if (!price || typeof price !== 'number') {
-      return json(
-        { error: 'Price parameter is required and must be a number' },
-        { status: 400 }
-      );
+      return new Response(JSON.stringify({ error: 'Price parameter is required and must be a number' }), {
+        status: 400,
+        headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' },
+      });
     }
 
     // Find product by exact price match
     const product = PRODUCTS.find((p) => p.price === price);
     if (!product) {
-      return json(
-        { error: `No product found for price: ${price} kr` },
-        { status: 404 }
-      );
+      return new Response(JSON.stringify({ error: `No product found for price: ${price} kr` }), {
+        status: 404,
+        headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' },
+      });
     }
 
     // Sync product to Stripe if needed
@@ -64,18 +76,27 @@ export async function POST({ request }: { request: Request }) {
         onConflict: 'product_slug',
       });
 
-    return json({
+    return new Response(JSON.stringify({
       success: true,
       sessionId: session.id,
       url: session.url,
       productSlug: product.slug,
       productName: product.name,
+    }), {
+      status: 200,
+      headers: {
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': '*',
+      },
     });
   } catch (error) {
     console.error('Redirect checkout error:', error);
-    return json(
-      { error: 'Failed to create checkout session' },
-      { status: 500 }
-    );
+    return new Response(JSON.stringify({ error: 'Failed to create checkout session' }), {
+      status: 500,
+      headers: {
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': '*',
+      },
+    });
   }
 }
