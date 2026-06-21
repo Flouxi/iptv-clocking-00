@@ -40,6 +40,92 @@ export interface Product {
   fileSizeMb?: number;
 }
 
+// Spanish World Cup 2026 Plans
+export const SPANISH_WORLD_CUP_PLANS: Product[] = [
+  {
+    slug: "mundial-3-meses",
+    name: "3 Meses Mundial 2026",
+    price: 2499,
+    originalPrice: 3999,
+    category: "business" as Category,
+    image: planner,
+    rating: 4.9,
+    reviews: 450,
+    pages: 30,
+    short: "Acceso 3 meses a +47.000 canales en 4K.",
+    description:
+      "Disfruta del Mundial 2026 en calidad 4K UHD con más de 47.000 canales en vivo, +190.000 películas y series, y soporte 24/7 en español.",
+    features: [
+      "Calidad SD/HD/FHD/4K",
+      "+47.000 canales con EPG",
+      "+190.000 VOD y series",
+      "Canales PPV",
+      "Tecnología anti-congelamiento",
+      "Soporte dedicado 24/7",
+      "Garantía de devolución 1 día",
+      "Xtreme/M3U/MAG",
+      "App propia Android",
+      "Soporte VPN",
+    ],
+  },
+  {
+    slug: "mundial-6-meses-premium",
+    name: "6 Meses + Premium Player",
+    price: 4499,
+    originalPrice: 6999,
+    category: "business" as Category,
+    image: planner,
+    rating: 4.95,
+    reviews: 520,
+    pages: 30,
+    short: "6 meses con Premium Player incluido.",
+    description:
+      "Acceso 6 meses + Premium Player. Disfruta del fútbol mundial sin interrupciones con la mejor tecnología de streaming.",
+    features: [
+      "Calidad SD/HD/FHD/4K",
+      "+47.000 canales con EPG",
+      "+190.000 VOD y series",
+      "Canales PPV",
+      "Tecnología anti-congelamiento",
+      "Soporte dedicado 24/7",
+      "Garantía de devolución 1 día",
+      "Xtreme/M3U/MAG",
+      "App propia Android",
+      "Soporte VPN",
+      "Premium Player incluido",
+    ],
+    popular: true,
+  },
+  {
+    slug: "mundial-12-meses-premium",
+    name: "12 Meses + Premium Player",
+    price: 6499,
+    originalPrice: 9999,
+    category: "business" as Category,
+    image: planner,
+    rating: 5.0,
+    reviews: 680,
+    pages: 30,
+    short: "Un año completo + Premium Player. Mejor valor.",
+    description:
+      "Acceso 12 meses + Premium Player. La mejor opción para disfrutar todo el año de deportes, películas y series en 4K.",
+    features: [
+      "Calidad SD/HD/FHD/4K",
+      "+47.000 canales con EPG",
+      "+190.000 VOD y series",
+      "Canales PPV",
+      "Tecnología anti-congelamiento",
+      "Soporte dedicado 24/7",
+      "Garantía de devolución 1 día",
+      "Xtreme/M3U/MAG",
+      "App propia Android",
+      "Soporte VPN",
+      "Premium Player incluido",
+    ],
+    popular: true,
+  },
+];
+
 export const PRODUCTS: Product[] = [
   {
     slug: "starter-business-planner",
@@ -243,8 +329,18 @@ export const PRODUCTS: Product[] = [
 export const formatPrice = (n: number) =>
   `${n.toLocaleString("sv-SE")} kr`;
 
-export const getProduct = (slug: string) =>
-  PRODUCTS.find((p) => p.slug === slug);
+export const formatPriceEUR = (n: number) =>
+  `${(n / 100).toLocaleString("es-ES", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}€`;
+
+export const getProduct = (slug: string) => {
+  // Check Spanish World Cup plans first
+  const wcPlan = SPANISH_WORLD_CUP_PLANS.find((p) => p.slug === slug);
+  if (wcPlan) return wcPlan;
+  // Then check regular products
+  return PRODUCTS.find((p) => p.slug === slug);
+};
 
 export const getCategoryLabel = (id: Category) =>
   CATEGORIES.find((c) => c.id === id)?.label ?? id;
+
+export const getAllProducts = () => [...SPANISH_WORLD_CUP_PLANS, ...PRODUCTS];
