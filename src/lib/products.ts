@@ -12,7 +12,8 @@ export type Category =
   | "marketing"
   | "hr"
   | "realestate"
-  | "freelancer";
+  | "freelancer"
+  | "iptv";
 
 export const CATEGORIES: { id: Category; label: string }[] = [
   { id: "business", label: "Företag" },
@@ -21,6 +22,7 @@ export const CATEGORIES: { id: Category; label: string }[] = [
   { id: "hr", label: "HR" },
   { id: "realestate", label: "Fastigheter" },
   { id: "freelancer", label: "Frilansare" },
+  { id: "iptv", label: "IPTV" },
 ];
 
 export interface Product {
@@ -323,6 +325,49 @@ export const PRODUCTS: Product[] = [
     description:
       "Det ultimata lanseringskittet för nya företag. Affärsplan, juridiska mallar, marknadsföringsplan och ekonomistyrning.",
     features: ["Affärsplan", "Juridiska mallar", "Marknadsplan", "Ekonomistyrning"],
+  },
+  {
+    slug: "iptv-mundial-24",
+    name: "IPTV Mundial 24.99€",
+    price: 2499,
+    category: "iptv",
+    image: planner,
+    rating: 4.9,
+    reviews: 1240,
+    pages: 0,
+    short: "3 meses de IPTV con 30,000+ canales en directo.",
+    description:
+      "Acceso a 30,000+ canales de televisión en directo, películas, series y todo el fútbol del Mundial 2026. Entrega en 15 minutos.",
+    features: ["30,000+ canales", "Cobertura mundial", "4K UHD", "Garantía 30 días"],
+  },
+  {
+    slug: "iptv-mundial-44",
+    name: "IPTV Mundial 44.99€",
+    price: 4499,
+    category: "iptv",
+    image: planner,
+    rating: 4.9,
+    reviews: 1240,
+    pages: 0,
+    short: "1 año de IPTV con acceso completo a todos los eventos.",
+    description:
+      "Un año completo de acceso a 30,000+ canales, todo el fútbol del Mundial 2026, películas, series y deportes en vivo. Entrega inmediata.",
+    features: ["30,000+ canales", "1 año completo", "4K UHD", "Garantía 30 días"],
+    popular: true,
+  },
+  {
+    slug: "iptv-mundial-64",
+    name: "IPTV Mundial 64.99€",
+    price: 6499,
+    category: "iptv",
+    image: planner,
+    rating: 4.9,
+    reviews: 1240,
+    pages: 0,
+    short: "3 años + 6 meses gratis. La mejor oferta del Mundial.",
+    description:
+      "3 años y medio de IPTV sin interrupciones. Acceso total a 30,000+ canales, todo el fútbol, películas, series y deportes. Entrega en 15 minutos.",
+    features: ["30,000+ canales", "3.5 años", "4K UHD", "Garantía 30 días"],
   },
 ];
 
