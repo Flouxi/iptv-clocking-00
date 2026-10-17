@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { ArrowRight, Briefcase, Wallet, Megaphone, UsersRound, Home, UserCog } from "lucide-react";
+import { ArrowRight, Briefcase, Wallet, Megaphone, UsersRound, Home, UserCog, Tv } from "lucide-react";
 import heroPattern from "@/assets/hero-pattern.jpg";
 import { PRODUCTS, CATEGORIES } from "@/lib/products";
 import { ProductCard } from "@/components/ProductCard";
@@ -24,6 +24,7 @@ const CATEGORY_ICONS = {
   hr: UsersRound,
   realestate: Home,
   freelancer: UserCog,
+  iptv: Tv,
 } as const;
 
 function HomePage() {
