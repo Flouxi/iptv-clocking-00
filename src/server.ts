@@ -128,7 +128,7 @@ async function handleCheckoutApi(request: Request): Promise<Response | null> {
     // Create checkout session
     const baseUrl = origin || "https://iptv-clocking-00.vercel.app";
     const successUrl = `${url.origin}/success?session_id={CHECKOUT_SESSION_ID}`;
-    const cancelUrl = `${baseUrl}/shop`;
+    const cancelUrl = `${baseUrl}${baseUrl === url.origin ? "/shop" : "/"}`;
 
     const session = await createCheckoutSession({
       priceId: syncedProduct.priceId,
