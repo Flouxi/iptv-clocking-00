@@ -127,7 +127,7 @@ function RootComponent() {
             <Outlet />
           </main>
           {isTvCheckout ? <footer className="border-t border-border bg-card py-6"><div className="container-page flex flex-wrap gap-x-6 gap-y-3 text-sm text-muted-foreground"><span>IPTVNORD4K · Paquetes de televisión</span><a href="https://www.iptvnord4k.com/villkor" className="underline">Condiciones y reembolsos</a><a href="https://www.iptvnord4k.com/integritetspolicy" className="underline">Privacidad</a><a href="https://www.iptvnord4k.com/" className="underline">Contacto y soporte</a></div></footer> : <Footer />}
-          <CookieConsent />
+          {!isTvCheckout && <CookieConsent />}
         </div>
       </CartProvider>
     </QueryClientProvider>
