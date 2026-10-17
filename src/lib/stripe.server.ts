@@ -100,11 +100,15 @@ export async function createCheckoutSession({
   successUrl,
   cancelUrl,
   customerEmail,
+  additionalLineItems = [],
+  metadata,
 }: {
   priceId: string;
   successUrl: string;
   cancelUrl: string;
   customerEmail?: string;
+  additionalLineItems?: { price: string; quantity: number }[];
+  metadata?: Record<string, string>;
 }) {
   if (!stripe) throw new Error("Stripe is not configured. Please set STRIPE_SECRET_KEY.");
   try {
@@ -114,12 +118,14 @@ export async function createCheckoutSession({
           price: priceId,
           quantity: 1,
         },
+        ...additionalLineItems,
       ],
       mode: 'payment',
       success_url: successUrl,
       cancel_url: cancelUrl,
       customer_email: customerEmail,
       locale: 'es',
+      metadata,
     });
 
     return session;

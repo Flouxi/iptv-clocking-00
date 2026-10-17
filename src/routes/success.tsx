@@ -42,7 +42,7 @@ function SuccessPage() {
       .then((res) => {
         setOrder(res.order as Order | null);
         setPaid(res.paid);
-        clear();
+        if (res.paid) clear();
       })
       .catch((e) => setError(e?.message ?? "Se ha producido un error"))
       .finally(() => setLoading(false));
@@ -57,14 +57,27 @@ function SuccessPage() {
     );
   }
 
-  if (error || !order) {
+  if (!error && paid && !order) {
+    return (
+      <div className="container-page py-20">
+        <div className="mx-auto max-w-xl rounded-2xl border border-border bg-card p-10 text-center">
+          <CheckCircle2 className="mx-auto h-12 w-12 text-success" />
+          <h1 className="mt-4 text-2xl font-bold">Pago confirmado</h1>
+          <p className="mt-2 text-muted-foreground">Hemos verificado tu pago con Stripe. Para recibir ayuda con la entrega o la activación de tu compra, contacta con nuestro equipo de soporte.</p>
+          <Link to="/contact" className="mt-6 inline-block text-primary hover:underline">Contactar con soporte →</Link>
+        </div>
+      </div>
+    );
+  }
+
+  if (error || !order || !paid) {
     return (
       <div className="container-page py-20">
         <div className="mx-auto max-w-xl rounded-2xl border border-border bg-card p-10 text-center">
           <AlertTriangle className="mx-auto h-12 w-12 text-destructive" />
           <h1 className="mt-4 text-2xl font-bold">Se ha producido un error</h1>
           <p className="mt-2 text-muted-foreground">
-            {error ?? "No hemos podido encontrar tu pedido."}
+            {error ?? "El pago aún no está confirmado. Si acabas de pagar, espera un momento y vuelve a cargar esta página."}
           </p>
           <Link to="/contact" className="mt-6 inline-block text-primary hover:underline">
             Contactar con soporte →
@@ -96,21 +109,21 @@ function SuccessPage() {
         <div className="mt-8 rounded-xl border border-border bg-background p-5">
           <dl className="grid gap-3 text-sm sm:grid-cols-2">
             <div>
-              <dt className="text-muted-foreground">Ordernummer</dt>
+              <dt className="text-muted-foreground">Número de pedido</dt>
               <dd className="font-mono font-semibold">#{orderNumber}</dd>
             </div>
             <div>
-              <dt className="text-muted-foreground">Status</dt>
+              <dt className="text-muted-foreground">Estado</dt>
               <dd className="font-semibold text-success">
-                {paid ? "Betald" : order.status}
+                {paid ? "Pagado" : order.status}
               </dd>
             </div>
             <div className="sm:col-span-2">
-              <dt className="text-muted-foreground">Produkt</dt>
+              <dt className="text-muted-foreground">Producto</dt>
               <dd className="font-semibold">{order.product_name}</dd>
             </div>
             <div>
-              <dt className="text-muted-foreground">Belopp</dt>
+              <dt className="text-muted-foreground">Importe</dt>
               <dd className="font-semibold">{formatPrice(order.amount_total / 100)}</dd>
             </div>
           </dl>

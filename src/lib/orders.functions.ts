@@ -31,6 +31,7 @@ export const fetchOrderBySession = createServerFn({ method: "POST" })
       amount_total?: number;
     };
 
+    try {
     const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
 
     if (session.payment_status === "paid") {
@@ -51,4 +52,8 @@ export const fetchOrderBySession = createServerFn({ method: "POST" })
       .maybeSingle();
 
     return { order, paid: session.payment_status === "paid" };
+    } catch {
+      // Stripe is authoritative even when the optional order database is unavailable.
+      return { order: null, paid: session.payment_status === "paid" };
+    }
   });

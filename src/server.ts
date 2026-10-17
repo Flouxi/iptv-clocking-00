@@ -72,6 +72,13 @@ async function handleCheckoutApi(request: Request): Promise<Response | null> {
   try {
     const body = await request.json();
     const { price, productSlug, customerEmail, origin } = body;
+    const extraScreens = body.extraScreens ?? 0;
+    if (!Number.isInteger(extraScreens) || extraScreens < 0 || extraScreens > 5 || (extraScreens > 0 && !productSlug)) {
+      return new Response(JSON.stringify({ error: "Número de pantallas no válido" }), {
+        status: 400,
+        headers: { "Content-Type": "application/json", "Access-Control-Allow-Origin": "*" },
+      });
+    }
 
     // Validate inputs
     if (!price || typeof price !== "number") {
@@ -97,7 +104,7 @@ async function handleCheckoutApi(request: Request): Promise<Response | null> {
       ? getProduct(productSlug)
       : PRODUCTS.find((p) => Math.round(p.price * 100) === priceInCents);
 
-    if (!product || Math.round(product.price * 100) !== priceInCents) {
+    if (!product || (extraScreens > 0 && product.category !== "iptv") || Math.round(product.price * 100) + extraScreens * 2000 !== priceInCents) {
       return new Response(
         JSON.stringify({ error: `No product found for price: ${priceInCents}` }),
         {
@@ -112,10 +119,15 @@ async function handleCheckoutApi(request: Request): Promise<Response | null> {
 
     // Sync product to Stripe
     const syncedProduct = await syncProductToStripe(product);
+    const additionalLineItems: { price: string; quantity: number }[] = [];
+    if (extraScreens > 0) {
+      const extra = await syncProductToStripe({ slug: "iptv-extra-screen", name: "Pantalla adicional IPTV", price: 20, short: "Una pantalla adicional durante el período del paquete contratado." });
+      additionalLineItems.push({ price: extra.priceId, quantity: extraScreens });
+    }
 
     // Create checkout session
     const baseUrl = origin || "https://iptv-clocking-00.vercel.app";
-    const successUrl = `${baseUrl}/success?session_id={CHECKOUT_SESSION_ID}`;
+    const successUrl = `${url.origin}/success?session_id={CHECKOUT_SESSION_ID}`;
     const cancelUrl = `${baseUrl}/shop`;
 
     const session = await createCheckoutSession({
@@ -123,6 +135,8 @@ async function handleCheckoutApi(request: Request): Promise<Response | null> {
       successUrl,
       cancelUrl,
       customerEmail: customerEmail || undefined,
+      additionalLineItems,
+      metadata: { product_slug: product.slug, extra_screens: String(extraScreens) },
     });
 
     return new Response(
