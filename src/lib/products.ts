@@ -132,7 +132,7 @@ export const PRODUCTS: Product[] = [
   {
     slug: "starter-business-planner",
     name: "Planificador para iniciar tu negocio",
-    price: 31.31,
+    price: 29,
     originalPrice: 44.77,
     category: "business",
     image: planner,
@@ -147,7 +147,7 @@ export const PRODUCTS: Product[] = [
   {
     slug: "social-media-content-calendar",
     name: "Calendario completo de contenidos para redes sociales",
-    price: 62.72,
+    price: 65,
     originalPrice: 80.66,
     category: "marketing",
     image: marketing,
@@ -177,7 +177,7 @@ export const PRODUCTS: Product[] = [
   {
     slug: "freelancer-finance-pack",
     name: "Paquete financiero para autónomos",
-    price: 116.55,
+    price: 119,
     originalPrice: 152.45,
     category: "freelancer",
     image: finance,
