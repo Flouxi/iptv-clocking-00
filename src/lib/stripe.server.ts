@@ -21,6 +21,16 @@ export async function syncProductToStripe(product: {
   description?: string;
   short?: string;
 }) {
+  // This Stripe catalog is restricted to the 00 site's actual PDF products.
+  // Archived TV products must never be recreated by a legacy checkout/sync route.
+  const pdfProducts = new Set([
+    'starter-business-planner', 'social-media-content-calendar', 'small-business-starter-kit',
+    'freelancer-finance-pack', 'annual-goal-project-planner', 'restaurant-business-forms',
+    'real-estate-client-forms', 'complete-hr-starter-kit', 'ecommerce-business-toolkit',
+    'marketing-agency-client-pack', 'ultimate-entrepreneur-bundle',
+    'premium-brand-identity-workbook', 'full-business-launch-kit',
+  ]);
+  if (!pdfProducts.has(product.slug)) throw new Error('Este producto ya no está disponible para el pago.');
   if (!stripe) throw new Error("Stripe is not configured. Please set STRIPE_SECRET_KEY.");
   try {
     // Search for existing product by metadata slug

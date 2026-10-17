@@ -35,7 +35,8 @@ function TvCheckoutPage() {
         <div className="mb-3 inline-flex items-center gap-2 text-sm font-medium text-primary"><Tv size={18} /> Televisión de prepago</div>
         <h1 className="text-3xl font-bold sm:text-4xl">Confirma tu paquete.</h1>
         <p className="mt-3 max-w-lg text-muted-foreground">Estás comprando acceso al servicio de televisión de IPTVNORD4K. Elige la duración y comprueba las pantallas incluidas antes de pagar.</p>
-        <fieldset disabled={busy} className="mt-7 space-y-3">
+        <p className="mt-5 rounded-lg border border-border bg-card p-4" role="status">Los pagos de televisión están desactivados. No se aceptan nuevos pedidos.</p>
+        <fieldset disabled className="mt-7 space-y-3">
           <legend className="mb-3 font-semibold">Tu paquete de televisión</legend>
           {(Object.keys(TV_PLANS) as TvPlanKey[]).map(key => { const p = TV_PLANS[key]; return <label key={key} className={`flex cursor-pointer items-center gap-4 rounded-xl border p-4 sm:p-5 ${key === selected ? 'border-primary bg-primary/5 ring-1 ring-primary' : 'border-border bg-card'}`}>
             <input type="radio" name="tv-plan" value={key} checked={selected === key} onChange={() => setSelected(key)} className="h-4 w-4 accent-primary" />
@@ -56,8 +57,8 @@ function TvCheckoutPage() {
         <p className="mb-5 text-sm text-muted-foreground">Pago único por el período seleccionado.</p>
         {search.cancelled && <p className="mb-4 text-sm" role="status">El pago se canceló. Puedes volver a intentarlo.</p>}
         {error && <p role="alert" className="mb-4 text-sm text-destructive">{error}</p>}
-        <Button onClick={buy} disabled={busy} size="lg" className="h-auto w-full whitespace-normal py-3">
-          {busy ? <Loader2 className="animate-spin" /> : <LockKeyhole />} {busy ? 'Abriendo Stripe…' : 'Pagar ' + tvPrice(plan.amount) + ' con Stripe'}
+        <Button onClick={buy} disabled size="lg" className="h-auto w-full whitespace-normal py-3">
+          <LockKeyhole /> Pago no disponible
         </Button>
         <p className="mt-4 text-xs leading-relaxed text-muted-foreground">El producto y el importe aparecerán también en el pago y en el recibo de Stripe.</p>
         <a href="https://www.iptvnord4k.com/villkor" className="mt-5 inline-block text-sm underline underline-offset-4">Condiciones y reembolsos</a>
