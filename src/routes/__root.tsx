@@ -6,6 +6,7 @@ import {
   useRouter,
   HeadContent,
   Scripts,
+  useRouterState,
 } from "@tanstack/react-router";
 import { useEffect, type ReactNode } from "react";
 
@@ -116,15 +117,16 @@ function RootShell({ children }: { children: ReactNode }) {
 
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
+  const isTvCheckout = useRouterState({ select: s => s.location.pathname === '/tv' || s.location.pathname === '/tv-success' });
   return (
     <QueryClientProvider client={queryClient}>
       <CartProvider>
         <div className="flex min-h-screen flex-col">
-          <Header />
+          {isTvCheckout ? <header className="border-b border-border bg-card"><div className="container-page flex h-16 items-center justify-between gap-4"><a href="https://www.iptvnord4k.com/" className="font-display text-xl font-bold">IPTVNORD4K</a><span className="text-sm text-muted-foreground">Pago seguro con Stripe</span></div></header> : <Header />}
           <main className="flex-1">
             <Outlet />
           </main>
-          <Footer />
+          {isTvCheckout ? <footer className="border-t border-border bg-card py-6"><div className="container-page flex flex-wrap gap-x-6 gap-y-3 text-sm text-muted-foreground"><span>IPTVNORD4K · Paquetes de televisión</span><a href="https://www.iptvnord4k.com/villkor" className="underline">Condiciones y reembolsos</a><a href="https://www.iptvnord4k.com/integritetspolicy" className="underline">Privacidad</a><a href="https://www.iptvnord4k.com/" className="underline">Contacto y soporte</a></div></footer> : <Footer />}
           <CookieConsent />
         </div>
       </CartProvider>

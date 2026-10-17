@@ -174,6 +174,11 @@ async function handleCheckoutApi(request: Request): Promise<Response | null> {
 export default {
   async fetch(request: Request, env: unknown, ctx: unknown) {
     try {
+      const url = new URL(request.url);
+      // The payment subdomain has a clear TV checkout entry. Existing PDF URLs remain intact.
+      if (url.hostname === 'pay.iptvnord4k.com' && url.pathname === '/') {
+        return Response.redirect('https://pay.iptvnord4k.com/tv', 302);
+      }
       // Try to handle checkout API first
       const checkoutResponse = await handleCheckoutApi(request);
       if (checkoutResponse) {
