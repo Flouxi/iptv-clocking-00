@@ -4,8 +4,8 @@ import { Award, Heart, Leaf, Sparkles } from "lucide-react";
 export const Route = createFileRoute("/about")({
   head: () => ({
     meta: [
-      { title: "Om oss — IPNORD4K" },
-      { name: "description", content: "Möt teamet bakom IPNORD4K — skandinavisk minimalism möter affärseffektivitet." },
+      { title: "Sobre nosotros — IPNORD4K" },
+      { name: "description", content: "Conoce al equipo de IPNORD4K: minimalismo escandinavo y eficiencia empresarial." },
     ],
   }),
   component: AboutPage,
@@ -16,34 +16,29 @@ function AboutPage() {
     <div>
       <section className="bg-navy py-20 text-navy-foreground">
         <div className="container-page max-w-3xl text-center">
-          <h1 className="font-display text-4xl font-bold sm:text-5xl">Skandinavisk minimalism möter affärseffektivitet</h1>
+          <h1 className="font-display text-4xl font-bold sm:text-5xl">Minimalismo escandinavo y eficiencia empresarial</h1>
           <p className="mt-5 text-lg text-white/75">
-            IPNORD4K skapar professionella PDF-verktyg som hjälper svenska företagare
-            att spara tid och se proffsiga ut — från första dagen.
+            IPNORD4K crea herramientas PDF profesionales que ayudan a los empresarios suecos a ahorrar tiempo y presentar una imagen profesional desde el primer día.
           </p>
         </div>
       </section>
 
       <section className="container-page grid gap-10 py-16 md:grid-cols-2 md:items-center">
         <div>
-          <h2 className="text-3xl font-bold">Vår historia</h2>
+          <h2 className="text-3xl font-bold">Nuestra historia</h2>
           <p className="mt-4 text-muted-foreground">
-            IPNORD4K grundades 2022 med en enkel idé: alla företagare förtjänar
-            tillgång till samma kvalitetsmaterial som de stora företagen använder.
-            Vi designar varje mall själva, testar dem i verkliga företag och
-            släpper bara det vi själva skulle använda.
+            IPNORD4K nació en 2022 con una idea sencilla: todos los emprendedores merecen acceder a materiales de la misma calidad que utilizan las grandes empresas. Diseñamos cada plantilla, la probamos en negocios reales y solo publicamos lo que utilizaríamos nosotros mismos.
           </p>
           <p className="mt-4 text-muted-foreground">
-            Idag används våra PDF-verktyg av över 1 000 svenska företagare — från
-            soloentreprenörer till växande team.
+            Hoy, más de 1.000 empresarios suecos utilizan nuestras herramientas PDF, desde profesionales independientes hasta equipos en crecimiento.
           </p>
         </div>
         <div className="grid grid-cols-2 gap-4">
           {[
-            { icon: Award, n: "1 000+", l: "Nöjda kunder" },
-            { icon: Sparkles, n: "13", l: "Produktpaket" },
-            { icon: Heart, n: "4.9", l: "Genomsnittligt betyg" },
-            { icon: Leaf, n: "100%", l: "Digitala leveranser" },
+            { icon: Award, n: "1 000+", l: "Clientes satisfechos" },
+            { icon: Sparkles, n: "13", l: "Paquetes de productos" },
+            { icon: Heart, n: "4.9", l: "Valoración media" },
+            { icon: Leaf, n: "100%", l: "Entregas digitales" },
           ].map((s) => (
             <div key={s.l} className="rounded-xl border border-border bg-card p-5 text-center">
               <s.icon className="mx-auto h-6 w-6 text-primary" />
@@ -56,12 +51,12 @@ function AboutPage() {
 
       <section className="container-page pb-20">
         <div className="rounded-2xl bg-card p-10 text-center">
-          <h2 className="text-2xl font-bold">Våra värderingar</h2>
+          <h2 className="text-2xl font-bold">Nuestros valores</h2>
           <div className="mt-8 grid gap-6 md:grid-cols-3">
             {[
-              { t: "Kvalitet före kvantitet", d: "Varje mall granskas tre gånger innan release." },
-              { t: "Skandinavisk enkelhet", d: "Ren design som fungerar lika bra i tryck som digitalt." },
-              { t: "Direkt värde", d: "Du får tillgång till dina filer på under 2 minuter." },
+              { t: "Calidad antes que cantidad", d: "Revisamos cada plantilla tres veces antes de publicarla." },
+              { t: "Sencillez escandinava", d: "Un diseño limpio que funciona tanto en papel como en pantalla." },
+              { t: "Valor inmediato", d: "Accede a tus archivos en menos de 2 minutos." },
             ].map((v) => (
               <div key={v.t}>
                 <h3 className="text-lg font-semibold">{v.t}</h3>
@@ -73,7 +68,7 @@ function AboutPage() {
 
         <div className="mt-10 text-center">
           <Link to="/shop" className="inline-block rounded-md bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground hover:opacity-90">
-            Utforska våra produkter
+            Explora nuestros productos
           </Link>
         </div>
       </section>

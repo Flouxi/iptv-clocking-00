@@ -12,8 +12,8 @@ export const Route = createFileRoute("/shop")({
   validateSearch: searchSchema,
   head: () => ({
     meta: [
-      { title: "Butik — IPNORD4K" },
-      { name: "description", content: "Bläddra alla professionella PDF-verktyg och affärsmallar." },
+      { title: "Tienda — IPNORD4K" },
+      { name: "description", content: "Explora todas las herramientas PDF profesionales y plantillas empresariales." },
     ],
   }),
   component: ShopPage,
@@ -30,9 +30,9 @@ function ShopPage() {
   return (
     <div className="container-page py-12">
       <header className="mb-8">
-        <h1 className="text-4xl font-bold">Butik</h1>
+        <h1 className="text-4xl font-bold">Tienda</h1>
         <p className="mt-2 text-muted-foreground">
-          {items.length} produkter • Direktnedladdning efter köp
+          {items.length} productos • Descarga inmediata tras la compra
         </p>
       </header>
 
@@ -40,7 +40,7 @@ function ShopPage() {
         <aside className="lg:sticky lg:top-20 lg:self-start">
           <div className="rounded-xl border border-border bg-card p-5">
             <h2 className="text-sm font-semibold uppercase tracking-wider text-muted-foreground">
-              Kategorier
+              Categorías
             </h2>
             <ul className="mt-3 space-y-1">
               <li>
@@ -48,7 +48,7 @@ function ShopPage() {
                   to="/shop"
                   className={`block rounded-md px-3 py-2 text-sm font-medium ${!category ? "bg-primary/10 text-primary" : "hover:bg-accent"}`}
                 >
-                  Alla produkter
+                  Todos los productos
                 </Link>
               </li>
               {CATEGORIES.map((c) => (
@@ -68,15 +68,15 @@ function ShopPage() {
 
         <div>
           <div className="mb-5 flex items-center justify-between">
-            <p className="text-sm text-muted-foreground">{items.length} resultat</p>
+            <p className="text-sm text-muted-foreground">{items.length} resultados</p>
             <select
               value={sort}
               onChange={(e) => setSort(e.target.value as typeof sort)}
               className="rounded-md border border-border bg-card px-3 py-2 text-sm"
             >
-              <option value="featured">Mest populära</option>
-              <option value="price-asc">Pris: Lågt till högt</option>
-              <option value="price-desc">Pris: Högt till lågt</option>
+              <option value="featured">Más populares</option>
+              <option value="price-asc">Precio: de menor a mayor</option>
+              <option value="price-desc">Precio: de mayor a menor</option>
             </select>
           </div>
 

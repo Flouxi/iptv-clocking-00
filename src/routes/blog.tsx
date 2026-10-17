@@ -5,14 +5,14 @@ import { BLOG_POSTS, formatDate } from "@/lib/blog";
 export const Route = createFileRoute("/blog")({
   head: () => ({
     meta: [
-      { title: "Blogg — IPNORD4K | Guider för svenska företagare" },
+      { title: "Blog — IPNORD4K | Guías para empresarios suecos" },
       {
         name: "description",
         content:
-          "Praktiska guider om företagande, ekonomi, marknadsföring och produktivitet — skrivna för svenska entreprenörer.",
+          "Guías prácticas sobre emprendimiento, finanzas, marketing y productividad para empresarios suecos.",
       },
-      { property: "og:title", content: "IPNORD4K Blogg — Guider för svenska företagare" },
-      { property: "og:description", content: "Praktiska guider om företagande, ekonomi och produktivitet." },
+      { property: "og:title", content: "Blog de IPNORD4K — Guías para empresarios suecos" },
+      { property: "og:description", content: "Guías prácticas sobre emprendimiento, finanzas y productividad." },
     ],
   }),
   component: BlogIndex,
@@ -24,12 +24,12 @@ function BlogIndex() {
     <div>
       <section className="bg-navy py-16 text-navy-foreground">
         <div className="container-page">
-          <span className="text-xs font-semibold uppercase tracking-wider text-gold">Blogg</span>
+          <span className="text-xs font-semibold uppercase tracking-wider text-gold">Blog</span>
           <h1 className="mt-3 font-display text-4xl font-bold sm:text-5xl">
-            Kunskap för svenska företagare
+            Conocimientos para empresarios suecos
           </h1>
           <p className="mt-4 max-w-2xl text-white/75">
-            Praktiska guider, mallar och insikter — skrivna av oss som själva driver bolag i Norden.
+            Guías, plantillas e ideas prácticas de quienes también gestionamos empresas en los países nórdicos.
           </p>
         </div>
       </section>
@@ -48,7 +48,7 @@ function BlogIndex() {
             <p className="mt-3 text-muted-foreground">{featured.excerpt}</p>
             <div className="mt-5 flex items-center gap-4 text-xs text-muted-foreground">
               <span className="inline-flex items-center gap-1"><Calendar className="h-3.5 w-3.5" /> {formatDate(featured.date)}</span>
-              <span className="inline-flex items-center gap-1"><Clock className="h-3.5 w-3.5" /> {featured.readMinutes} min läsning</span>
+              <span className="inline-flex items-center gap-1"><Clock className="h-3.5 w-3.5" /> {featured.readMinutes} min de lectura</span>
             </div>
           </div>
         </Link>

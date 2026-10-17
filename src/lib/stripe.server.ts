@@ -24,13 +24,13 @@ export async function syncProductToStripe(product: {
   if (!stripe) throw new Error("Stripe is not configured. Please set STRIPE_SECRET_KEY.");
   try {
     // Search for existing product by metadata slug
-    const products = await stripe.products.list({
-      limit: 100,
-    });
-
-    const existingProduct = products.data.find(
-      (p) => p.metadata?.slug === product.slug
-    );
+    let existingProduct: Stripe.Product | undefined;
+    for await (const candidate of stripe.products.list({ limit: 100, active: true })) {
+      if (candidate.metadata?.slug === product.slug) {
+        existingProduct = candidate;
+        break;
+      }
+    }
 
     let stripeProduct;
 
@@ -51,30 +51,33 @@ export async function syncProductToStripe(product: {
         metadata: {
           slug: product.slug,
         },
-      });
+      }, { idempotencyKey: `catalog-product-${product.slug}` });
     }
 
     // Check if price already exists
-    const prices = await stripe.prices.list({
-      product: stripeProduct.id,
-      active: true,
-    });
+    const amountCents = Math.round(product.price * 100);
+    let stripePrice: Stripe.Price | undefined;
+    for await (const candidate of stripe.prices.list({ product: stripeProduct.id, active: true, limit: 100 })) {
+      if (candidate.currency === 'eur' && candidate.unit_amount === amountCents && !candidate.recurring) {
+        stripePrice = candidate;
+        break;
+      }
+    }
 
-    let stripePrice;
-
-    if (prices.data.length > 0) {
-      // Use existing price
-      stripePrice = prices.data[0];
-    } else {
+    if (!stripePrice) {
       // Create new price (in cents)
       stripePrice = await stripe.prices.create({
         product: stripeProduct.id,
-        unit_amount: Math.round(product.price * 100),
-        currency: 'sek',
+        unit_amount: amountCents,
+        currency: 'eur',
         metadata: {
           slug: product.slug,
         },
-      });
+      }, { idempotencyKey: `catalog-price-eur-${product.slug}-${amountCents}` });
+    }
+
+    if (stripeProduct.default_price !== stripePrice.id) {
+      await stripe.products.update(stripeProduct.id, { default_price: stripePrice.id });
     }
 
     return {
@@ -106,7 +109,6 @@ export async function createCheckoutSession({
   if (!stripe) throw new Error("Stripe is not configured. Please set STRIPE_SECRET_KEY.");
   try {
     const session = await stripe.checkout.sessions.create({
-      payment_method_types: ['card', 'ideal', 'bancontact', 'giropay', 'eps', 'p24'],
       line_items: [
         {
           price: priceId,
@@ -117,7 +119,7 @@ export async function createCheckoutSession({
       success_url: successUrl,
       cancel_url: cancelUrl,
       customer_email: customerEmail,
-      locale: 'sv',
+      locale: 'es',
     });
 
     return session;

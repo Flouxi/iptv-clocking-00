@@ -5,17 +5,16 @@ import { Logo } from "./Logo";
 import { useCart } from "@/lib/cart";
 
 const NAV = [
-  { to: "/", label: "Hem" },
-  { to: "/shop", label: "Butik" },
-  { to: "/blog", label: "Blogg" },
-  { to: "/about", label: "Om oss" },
-  { to: "/contact", label: "Kontakt" },
+  { to: "/", label: "Inicio" },
+  { to: "/shop", label: "Tienda" },
+  { to: "/blog", label: "Blog" },
+  { to: "/about", label: "Sobre nosotros" },
+  { to: "/contact", label: "Contacto" },
 ] as const;
 
 export function Header() {
   const { count } = useCart();
   const [open, setOpen] = useState(false);
-  const [lang, setLang] = useState<"SV" | "EN">("SV");
 
   return (
     <header className="sticky top-0 z-40 border-b border-border bg-card/90 backdrop-blur supports-[backdrop-filter]:bg-card/75">
@@ -39,17 +38,16 @@ export function Header() {
         </nav>
 
         <div className="flex items-center gap-2">
-          <button
-            onClick={() => setLang(lang === "SV" ? "EN" : "SV")}
+          <span
             className="hidden rounded-md border border-border px-2.5 py-1 text-xs font-semibold text-muted-foreground hover:text-foreground sm:block"
-            aria-label="Byt språk"
+            aria-label="Idioma: español"
           >
-            {lang}
-          </button>
+            ES
+          </span>
           <Link
             to="/cart"
             className="relative rounded-md p-2 text-foreground hover:bg-accent"
-            aria-label="Kundvagn"
+            aria-label="Carrito"
           >
             <ShoppingBag className="h-5 w-5" />
             {count > 0 && (
@@ -61,7 +59,7 @@ export function Header() {
           <button
             onClick={() => setOpen(!open)}
             className="rounded-md p-2 hover:bg-accent md:hidden"
-            aria-label="Meny"
+            aria-label="Menú"
           >
             {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
           </button>

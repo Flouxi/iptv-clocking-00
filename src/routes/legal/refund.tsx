@@ -4,60 +4,53 @@ import { LegalLayout } from "@/components/LegalLayout";
 export const Route = createFileRoute("/legal/refund")({
   head: () => ({
     meta: [
-      { title: "Återbetalningspolicy — IPNORD4K" },
-      { name: "description", content: "Så fungerar återbetalning för digitala PDF-produkter." },
+      { title: "Política de reembolsos — IPNORD4K" },
+      { name: "description", content: "Cómo funcionan los reembolsos de productos PDF digitales." },
     ],
   }),
   component: () => (
-    <LegalLayout title="Återbetalningspolicy" updated="2026-06-13">
-      <h2>1. Digitala produkter</h2>
+    <LegalLayout title="Política de reembolsos" updated="2026-06-13">
+      <h2>1. Productos digitales</h2>
       <p>
-        Eftersom vi säljer digitala filer som levereras direkt efter köp gäller{" "}
-        <strong>ingen generell ångerrätt</strong> enligt distansavtalslagen
-        2 kap. 11 § punkt 11. Du godkänner detta när du slutför köpet i kassan.
+        Como vendemos archivos digitales que se entregan inmediatamente después de la compra,{" "}
+        <strong>no existe un derecho general de desistimiento</strong> según el capítulo 2, artículo 11, punto 11 de la ley sueca de contratos a distancia. Aceptas esta condición al completar el pago.
       </p>
 
-      <h2>2. När du har rätt till återbetalning</h2>
-      <p>Vi återbetalar köpet eller skickar en ersättningsfil om:</p>
+      <h2>2. Cuándo puedes solicitar un reembolso</h2>
+      <p>Reembolsaremos la compra o enviaremos un archivo de sustitución si:</p>
       <ul>
-        <li>Filen är skadad eller inte kan öppnas.</li>
-        <li>Du inte mottog någon nedladdningslänk inom 24 timmar.</li>
-        <li>Produkten väsentligt avviker från beskrivningen.</li>
-        <li>Dubbeldebitering har skett av tekniska skäl.</li>
+        <li>El archivo está dañado o no se puede abrir.</li>
+        <li>No has recibido el enlace de descarga en un plazo de 24 horas.</li>
+        <li>El producto difiere sustancialmente de su descripción.</li>
+        <li>Se ha producido un cargo duplicado por un error técnico.</li>
       </ul>
 
-      <h2>3. 30 dagars nöjdhetsgaranti</h2>
+      <h2>3. Garantía de satisfacción de 30 días</h2>
       <p>
-        Om du inom 30 dagar från köpet anser att produkten inte motsvarar dina
-        förväntningar — kontakta oss. Vi gör vårt yttersta för att lösa det,
-        antingen med en ersättningsprodukt eller, i särskilda fall, full
-        återbetalning.
+        Si el producto no cumple tus expectativas en los 30 días siguientes a la compra, contacta con nosotros. Intentaremos resolverlo con un producto de sustitución o, en casos concretos, un reembolso completo.
       </p>
 
-      <h2>4. Så begär du återbetalning</h2>
+      <h2>4. Cómo solicitar un reembolso</h2>
       <ol>
         <li>
-          Mejla{" "}
+          Escribe a{" "}
           <a href="mailto:support@ipnord4k.com">support@ipnord4k.com</a>{" "}
-          inom 30 dagar från köpet.
+          en los 30 días siguientes a la compra.
         </li>
         <li>
-          Ange ordernummer (du hittar det på tacksidan eller i bekräftelsemejlet)
-          och en kort beskrivning av problemet.
+          Indica el número de pedido (en la página de confirmación o en el correo electrónico) y describe brevemente el problema.
         </li>
         <li>
-          Vi svarar inom 2 arbetsdagar och hanterar ärendet inom 7 arbetsdagar.
+          Respondemos en un plazo de 2 días laborables y tramitamos la solicitud en un máximo de 7 días laborables.
         </li>
       </ol>
 
-      <h2>5. Återbetalningsmetod</h2>
+      <h2>5. Método de reembolso</h2>
       <p>
-        Återbetalning sker till samma betalningsmetod som användes vid köpet
-        (kort eller Klarna). Det kan ta 5–10 bankdagar innan beloppet syns på
-        ditt konto.
+        El reembolso se realiza al mismo método de pago utilizado en la compra. El importe puede tardar entre 5 y 10 días bancarios en aparecer en tu cuenta.
       </p>
 
-      <h2>6. Kontakt</h2>
+      <h2>6. Contacto</h2>
       <p>
         <a href="mailto:support@ipnord4k.com">support@ipnord4k.com</a>
       </p>

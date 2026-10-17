@@ -37,12 +37,12 @@ export function CountdownTimer() {
     <div className="inline-flex items-center gap-4 rounded-xl border border-gold/30 bg-gold/10 px-4 py-3 backdrop-blur">
       <div className="flex items-center gap-2 text-gold">
         <Clock className="h-4 w-4" />
-        <span className="text-xs font-semibold uppercase tracking-wider">Erbjudande slutar om</span>
+        <span className="text-xs font-semibold uppercase tracking-wider">La oferta termina en</span>
       </div>
       <div className="flex items-end gap-2">
-        <Block value={h} label="tim" />
+        <Block value={h} label="h" />
         <Block value={m} label="min" />
-        <Block value={s} label="sek" />
+        <Block value={s} label="s" />
       </div>
     </div>
   );

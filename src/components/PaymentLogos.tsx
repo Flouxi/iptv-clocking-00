@@ -22,7 +22,7 @@ export function PaymentLogos({
   return (
     <div
       className={`flex flex-wrap items-center gap-2 ${className}`}
-      aria-label="Accepterade betalsätt"
+      aria-label="Métodos de pago aceptados"
     >
       {LOGOS.map((l) => (
         <span

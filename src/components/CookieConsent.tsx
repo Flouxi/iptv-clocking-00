@@ -35,12 +35,11 @@ export function CookieConsent() {
           </div>
         </div>
         <div className="flex-1 text-sm text-foreground">
-          <p className="font-semibold">Vi använder cookies</p>
+          <p className="font-semibold">Utilizamos cookies</p>
           <p className="mt-1 text-muted-foreground">
-            Vi använder nödvändiga cookies för att webbplatsen ska fungera och valfria
-            cookies för analys. Läs mer i vår{" "}
+            Utilizamos cookies necesarias para que el sitio funcione y cookies opcionales para analizar su uso. Consulta nuestra{" "}
             <Link to="/legal/cookies" className="text-primary underline">
-              cookiepolicy
+              política de cookies
             </Link>
             .
           </p>
@@ -50,17 +49,17 @@ export function CookieConsent() {
             onClick={() => set("essential")}
             className="rounded-md border border-border bg-card px-3 py-2 text-xs font-semibold hover:bg-accent"
           >
-            Endast nödvändiga
+            Solo necesarias
           </button>
           <button
             onClick={() => set("accepted")}
             className="rounded-md bg-primary px-4 py-2 text-xs font-semibold text-primary-foreground hover:opacity-90"
           >
-            Acceptera alla
+            Aceptar todas
           </button>
           <button
             onClick={() => set("essential")}
-            aria-label="Stäng"
+            aria-label="Cerrar"
             className="rounded-md p-2 text-muted-foreground hover:bg-accent"
           >
             <X className="h-4 w-4" />

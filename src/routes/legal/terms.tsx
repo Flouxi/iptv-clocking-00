@@ -4,91 +4,72 @@ import { LegalLayout } from "@/components/LegalLayout";
 export const Route = createFileRoute("/legal/terms")({
   head: () => ({
     meta: [
-      { title: "Köpvillkor — IPNORD4K" },
-      { name: "description", content: "Villkor för köp av digitala PDF-produkter från IPNORD4K." },
+      { title: "Condiciones de compra — IPNORD4K" },
+      { name: "description", content: "Condiciones para comprar productos PDF digitales de IPNORD4K." },
     ],
   }),
   component: () => (
-    <LegalLayout title="Köpvillkor" updated="2026-06-13">
-      <h2>1. Allmänt</h2>
+    <LegalLayout title="Condiciones de compra" updated="2026-06-13">
+      <h2>1. General</h2>
       <p>
-        Dessa villkor gäller vid köp från IPNORD4K.COM. Genom att slutföra ett
-        köp accepterar du villkoren. Vi säljer endast digitala produkter — ingen
-        fysisk leverans förekommer.
+        Estas condiciones se aplican a las compras en IPNORD4K.COM. Al completar una compra, las aceptas. Solo vendemos productos digitales y no realizamos envíos físicos.
       </p>
 
-      <h2>2. Produkter</h2>
+      <h2>2. Productos</h2>
       <p>
-        Samtliga produkter är digitala PDF-filer för nedladdning. Beskrivningar
-        och sidantal anges på respektive produktsida.
+        Todos los productos son archivos PDF descargables. La descripción y el número de páginas se indican en cada ficha de producto.
       </p>
 
-      <h2>3. Pris och betalning</h2>
+      <h2>3. Precios y pago</h2>
       <p>
-        Alla priser anges i svenska kronor (SEK) inklusive moms. Betalning sker
-        i kassan via Stripe med kort eller Klarna. Inga kortuppgifter lagras hos
-        oss.
+        Todos los precios se indican en euros (EUR), IVA incluido. El pago se gestiona mediante Stripe con los métodos disponibles en su página de pago. No almacenamos los datos de tu tarjeta.
       </p>
 
-      <h2>4. Leverans</h2>
+      <h2>4. Entrega</h2>
       <p>
-        Leverans sker direkt efter genomförd betalning. Du omdirigeras till en
-        tacksida med nedladdningslänk, och länken skickas även till din
-        e-postadress inom 2 minuter. Se vår{" "}
-        <a href="/legal/delivery">leveranspolicy</a>.
+        La entrega se realiza al completar el pago. Accederás a una página con el enlace de descarga y también te lo enviaremos por correo electrónico en un plazo de 2 minutos. Consulta nuestra{" "}
+        <a href="/legal/delivery">política de entrega</a>.
       </p>
 
-      <h2>5. Ångerrätt och återbetalning</h2>
+      <h2>5. Desistimiento y reembolsos</h2>
       <p>
-        Enligt distansavtalslagen (2005:59) 2 kap. 11 § punkt 11 gäller{" "}
-        <strong>ingen ångerrätt</strong> för digitala produkter som levererats
-        omedelbart efter ditt uttryckliga samtycke. Genom att slutföra köpet
-        samtycker du till omedelbar leverans och avstår från ångerrätten när
-        filen har laddats ner.
+        Según el capítulo 2, artículo 11, punto 11 de la ley sueca de contratos a distancia (2005:59),{" "}
+        <strong>no existe derecho de desistimiento</strong> para productos digitales entregados inmediatamente con tu consentimiento expreso. Al completar la compra, aceptas la entrega inmediata y renuncias al derecho de desistimiento cuando se haya descargado el archivo.
       </p>
       <p>
-        Undantag: om filen är skadad eller inte kan levereras får du en
-        ersättningsfil eller full återbetalning. Se vår{" "}
-        <a href="/legal/refund">återbetalningspolicy</a>.
+        Excepción: si el archivo está dañado o no puede entregarse, recibirás un archivo de sustitución o un reembolso completo. Consulta nuestra{" "}
+        <a href="/legal/refund">política de reembolsos</a>.
       </p>
 
-      <h2>6. Licens och användning</h2>
+      <h2>6. Licencia y uso</h2>
       <ul>
         <li>
-          Du får en personlig, icke-överlåtbar licens att använda och skriva ut
-          filerna obegränsat antal gånger för eget eller internt företagsbruk.
+          Recibes una licencia personal e intransferible para utilizar e imprimir los archivos sin límite para uso propio o interno de tu empresa.
         </li>
         <li>
-          Det är <strong>inte</strong> tillåtet att vidareförsälja, dela,
-          publicera eller distribuera filerna helt eller delvis.
+          Está <strong>prohibido</strong> revender, compartir, publicar o distribuir los archivos, total o parcialmente.
         </li>
         <li>
-          Det är inte tillåtet att modifiera filerna och sälja dem vidare som
-          egna produkter.
+          No está permitido modificar los archivos y venderlos como productos propios.
         </li>
       </ul>
 
-      <h2>7. Immateriella rättigheter</h2>
+      <h2>7. Propiedad intelectual</h2>
       <p>
-        Allt innehåll på webbplatsen och i produkterna ägs av IPNORD4K.COM och
-        skyddas av upphovsrätt.
+        Todo el contenido del sitio y de los productos pertenece a IPNORD4K.COM y está protegido por derechos de autor.
       </p>
 
-      <h2>8. Ansvarsbegränsning</h2>
+      <h2>8. Limitación de responsabilidad</h2>
       <p>
-        Våra produkter tillhandahålls i befintligt skick. Vi ansvarar inte för
-        ekonomiska beslut som baseras på materialet — använd alltid egen
-        bedömning eller rådgivare.
+        Los productos se ofrecen en su estado actual. No asumimos responsabilidad por decisiones económicas basadas en estos materiales; utiliza tu propio criterio o consulta a un asesor.
       </p>
 
-      <h2>9. Tvist och tillämplig lag</h2>
+      <h2>9. Conflictos y legislación aplicable</h2>
       <p>
-        Svensk lag är tillämplig. Tvist avgörs i första hand genom dialog och i
-        andra hand av Allmänna Reklamationsnämnden (ARN) eller svensk allmän
-        domstol.
+        Se aplica la legislación sueca. Las controversias se resolverán primero mediante diálogo y, en su caso, ante la Junta Nacional de Reclamaciones de Consumidores (ARN) o un tribunal ordinario sueco.
       </p>
 
-      <h2>10. Kontakt</h2>
+      <h2>10. Contacto</h2>
       <p>
         <a href="mailto:support@ipnord4k.com">support@ipnord4k.com</a>
       </p>

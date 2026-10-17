@@ -3,24 +3,24 @@ import { ChevronDown } from "lucide-react";
 
 const FAQS = [
   {
-    q: "Hur får jag min fil?",
-    a: "Direkt efter genomförd betalning omdirigeras du till en tacksida med en nedladdningslänk. Vi skickar också länken till din e-postadress inom 2 minuter.",
+    q: "¿Cómo recibo mi archivo?",
+    a: "Tras completar el pago, accederás a una página con el enlace de descarga. También te enviaremos el enlace por correo electrónico en un plazo de 2 minutos.",
   },
   {
-    q: "Vilket format har filen?",
-    a: "Alla produkter levereras som högupplösta PDF-filer i A4-format. De är optimerade för utskrift och kan öppnas på dator, mobil eller surfplatta.",
+    q: "¿En qué formato se entrega el archivo?",
+    a: "Todos los productos se entregan como archivos PDF de alta resolución en formato A4, optimizados para imprimir y compatibles con ordenadores, móviles y tabletas.",
   },
   {
-    q: "Kan jag skriva ut filen obegränsat antal gånger?",
-    a: "Ja. När du har köpt en PDF får du livstidsåtkomst och kan skriva ut den hur många gånger du vill för personligt och internt bruk i ditt företag.",
+    q: "¿Puedo imprimir el archivo tantas veces como quiera?",
+    a: "Sí. Al comprar un PDF, obtienes acceso de por vida y puedes imprimirlo tantas veces como necesites para uso personal o interno de tu empresa.",
   },
   {
-    q: "Är min betalning säker?",
-    a: "Ja. All betalning hanteras av Stripe — en av världens mest betrodda betalningsleverantörer. Vi sparar aldrig några kortuppgifter på våra servrar och all trafik är SSL-krypterad.",
+    q: "¿Es seguro el pago?",
+    a: "Sí. Stripe gestiona los pagos. Nunca guardamos los datos de tu tarjeta en nuestros servidores y todas las conexiones están cifradas mediante SSL.",
   },
   {
-    q: "Vad gör jag om jag inte får min fil?",
-    a: "Kolla först i din skräppost. Om filen fortfarande saknas, kontakta oss på support@ipnord4k.com med ditt ordernummer så löser vi det inom 24 timmar — eller får du pengarna tillbaka.",
+    q: "¿Qué hago si no recibo el archivo?",
+    a: "Revisa primero la carpeta de spam. Si no encuentras el archivo, escribe a support@ipnord4k.com con tu número de pedido. Lo resolveremos en un plazo de 24 horas o te devolveremos el dinero.",
   },
 ];
 
@@ -30,9 +30,9 @@ export function FAQ() {
     <section className="container-page py-20">
       <div className="mx-auto max-w-3xl">
         <div className="text-center">
-          <h2 className="text-3xl font-bold sm:text-4xl">Vanliga frågor</h2>
+          <h2 className="text-3xl font-bold sm:text-4xl">Preguntas frecuentes</h2>
           <p className="mt-2 text-muted-foreground">
-            Det vi får oftast — om inte ditt svar finns här, hör av dig.
+            Resolvemos las dudas más habituales. Si no encuentras la respuesta, ponte en contacto con nosotros.
           </p>
         </div>
         <div className="mt-10 divide-y divide-border rounded-2xl border border-border bg-card">

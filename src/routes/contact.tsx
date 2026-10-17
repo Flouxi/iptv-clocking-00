@@ -5,8 +5,8 @@ import { Mail, MessageSquare, Clock, CheckCircle2 } from "lucide-react";
 export const Route = createFileRoute("/contact")({
   head: () => ({
     meta: [
-      { title: "Kontakt — IPNORD4K" },
-      { name: "description", content: "Kontakta IPNORD4K — vi svarar normalt inom 24 timmar." },
+      { title: "Contacto — IPNORD4K" },
+      { name: "description", content: "Contacta con IPNORD4K. Normalmente respondemos en un plazo de 24 horas." },
     ],
   }),
   component: ContactPage,
@@ -18,9 +18,9 @@ function ContactPage() {
   return (
     <div className="container-page py-16">
       <header className="mx-auto max-w-2xl text-center">
-        <h1 className="text-4xl font-bold sm:text-5xl">Kontakta oss</h1>
+        <h1 className="text-4xl font-bold sm:text-5xl">Contacta con nosotros</h1>
         <p className="mt-3 text-muted-foreground">
-          Frågor om en produkt eller behöver hjälp med en beställning? Vi hör av oss inom 24 timmar.
+          ¿Tienes dudas sobre un producto o necesitas ayuda con un pedido? Te responderemos en un plazo de 24 horas.
         </p>
       </header>
 
@@ -29,8 +29,8 @@ function ContactPage() {
           {sent ? (
             <div className="py-10 text-center">
               <CheckCircle2 className="mx-auto h-12 w-12 text-success" />
-              <h2 className="mt-4 text-2xl font-bold">Tack för ditt meddelande!</h2>
-              <p className="mt-2 text-muted-foreground">Vi återkommer så snart som möjligt.</p>
+              <h2 className="mt-4 text-2xl font-bold">¡Gracias por tu mensaje!</h2>
+              <p className="mt-2 text-muted-foreground">Te responderemos lo antes posible.</p>
             </div>
           ) : (
             <form
@@ -38,12 +38,12 @@ function ContactPage() {
               className="space-y-4"
             >
               <div className="grid gap-4 sm:grid-cols-2">
-                <Input label="Namn" name="name" required />
-                <Input label="E-post" type="email" name="email" required />
+                <Input label="Nombre" name="name" required />
+                <Input label="Correo electrónico" type="email" name="email" required />
               </div>
-              <Input label="Ämne" name="subject" required />
+              <Input label="Asunto" name="subject" required />
               <label className="block text-sm">
-                <span className="mb-1.5 block font-medium">Meddelande</span>
+                <span className="mb-1.5 block font-medium">Mensaje</span>
                 <textarea
                   name="message"
                   required
@@ -52,7 +52,7 @@ function ContactPage() {
                 />
               </label>
               <button className="rounded-md bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground hover:opacity-90">
-                Skicka meddelande
+                Enviar mensaje
               </button>
             </form>
           )}
@@ -60,9 +60,9 @@ function ContactPage() {
 
         <aside className="space-y-4">
           {[
-            { icon: Mail, t: "E-post", d: "hello@ipnord4k.com" },
-            { icon: MessageSquare, t: "Support", d: "support@ipnord4k.com" },
-            { icon: Clock, t: "Svarstid", d: "Inom 24 timmar, vardagar" },
+            { icon: Mail, t: "Correo electrónico", d: "hello@ipnord4k.com" },
+            { icon: MessageSquare, t: "Soporte", d: "support@ipnord4k.com" },
+            { icon: Clock, t: "Tiempo de respuesta", d: "En un plazo de 24 horas en días laborables" },
           ].map((c) => (
             <div key={c.t} className="rounded-xl border border-border bg-card p-5">
               <c.icon className="h-5 w-5 text-primary" />

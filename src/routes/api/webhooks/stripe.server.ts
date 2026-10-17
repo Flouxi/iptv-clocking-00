@@ -56,7 +56,7 @@ export async function POST({ request }: { request: Request }) {
             stripe_customer_id: session.customer || null,
             product_slug: productSlug,
             amount_paid: session.amount_total || 0,
-            currency: session.currency || 'sek',
+            currency: session.currency || 'eur',
             customer_email: session.customer_email || null,
             status: 'completed',
             completed_at: new Date().toISOString(),

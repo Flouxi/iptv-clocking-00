@@ -71,7 +71,7 @@ async function handleCheckoutApi(request: Request): Promise<Response | null> {
 
   try {
     const body = await request.json();
-    const { price, customerEmail, origin } = body;
+    const { price, productSlug, customerEmail, origin } = body;
 
     // Validate inputs
     if (!price || typeof price !== "number") {
@@ -89,13 +89,15 @@ async function handleCheckoutApi(request: Request): Promise<Response | null> {
 
     // Import Stripe dynamically to avoid initialization errors
     const { stripe, createCheckoutSession, syncProductToStripe } = await import("@/lib/stripe.server");
-    const { PRODUCTS } = await import("@/lib/products");
+    const { PRODUCTS, getProduct } = await import("@/lib/products");
 
     // Find product by price (convert from cents if needed)
     const priceInCents = Math.round(price);
-    const product = PRODUCTS.find((p) => p.price === priceInCents);
+    const product = productSlug
+      ? getProduct(productSlug)
+      : PRODUCTS.find((p) => Math.round(p.price * 100) === priceInCents);
 
-    if (!product) {
+    if (!product || Math.round(product.price * 100) !== priceInCents) {
       return new Response(
         JSON.stringify({ error: `No product found for price: ${priceInCents}` }),
         {

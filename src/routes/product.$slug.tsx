@@ -25,22 +25,22 @@ export const Route = createFileRoute("/product/$slug")({
   }),
   notFoundComponent: () => (
     <div className="container-page py-20 text-center">
-      <h1 className="text-3xl font-bold">Produkten hittades inte</h1>
-      <Link to="/shop" className="mt-4 inline-block text-primary hover:underline">← Tillbaka till butiken</Link>
+      <h1 className="text-3xl font-bold">Producto no encontrado</h1>
+      <Link to="/shop" className="mt-4 inline-block text-primary hover:underline">← Volver a la tienda</Link>
     </div>
   ),
   errorComponent: () => (
     <div className="container-page py-20 text-center">
-      <h1 className="text-2xl font-bold">Något gick fel</h1>
+      <h1 className="text-2xl font-bold">Se ha producido un error</h1>
     </div>
   ),
   component: ProductPage,
 });
 
 const REVIEWS = [
-  { name: "Anna L.", rating: 5, text: "Helt fantastiska mallar! Sparade mig veckor av arbete." },
-  { name: "Mikael S.", rating: 5, text: "Professionell design, lätt att anpassa. Rekommenderas starkt." },
-  { name: "Sara K.", rating: 4, text: "Mycket bra innehåll, väl värt pengarna." },
+  { name: "Anna L.", rating: 5, text: "¡Plantillas excelentes! Me ahorraron semanas de trabajo." },
+  { name: "Mikael S.", rating: 5, text: "Diseño profesional y fácil de adaptar. Muy recomendable." },
+  { name: "Sara K.", rating: 4, text: "Contenido muy útil. Merece la pena." },
 ];
 
 function ProductPage() {
@@ -63,7 +63,7 @@ function ProductPage() {
       const { url } = await createCheckoutSession({ data: { slug: product.slug } });
       window.location.href = url;
     } catch (e) {
-      setError(e instanceof Error ? e.message : "Kunde inte starta betalningen");
+      setError(e instanceof Error ? e.message : "No se pudo iniciar el pago");
       setBuying(false);
     }
   };
@@ -78,9 +78,9 @@ function ProductPage() {
   return (
     <div className="container-page py-10 pb-32 md:pb-10">
       <nav className="mb-6 text-sm text-muted-foreground">
-        <Link to="/" className="hover:text-primary">Hem</Link>
+        <Link to="/" className="hover:text-primary">Inicio</Link>
         <span className="mx-2">/</span>
-        <Link to="/shop" className="hover:text-primary">Butik</Link>
+        <Link to="/shop" className="hover:text-primary">Tienda</Link>
         <span className="mx-2">/</span>
         <span className="text-foreground">{product.name}</span>
       </nav>
@@ -94,14 +94,14 @@ function ProductPage() {
           <div className="mt-3 grid grid-cols-3 gap-3">
             {[product.image, product.image, product.image].map((src, i) => (
               <figure key={i} className="overflow-hidden rounded-lg border border-border bg-card">
-                <img src={src} alt={`Förhandsvisning ${i + 1}`} className="aspect-square w-full object-cover opacity-80 hover:opacity-100" />
+                <img src={src} alt={`Vista previa ${i + 1}`} className="aspect-square w-full object-cover opacity-80 hover:opacity-100" />
                 <figcaption className="px-2 py-1 text-center text-[10px] text-muted-foreground">
-                  Sida {i + 1}
+                  Página {i + 1}
                 </figcaption>
               </figure>
             ))}
           </div>
-          <p className="mt-2 text-center text-xs text-muted-foreground">Förhandsvisning av provsidor</p>
+          <p className="mt-2 text-center text-xs text-muted-foreground">Vista previa de páginas de ejemplo</p>
         </div>
 
         {/* Info */}
@@ -112,7 +112,7 @@ function ProductPage() {
             </span>
             {product.popular && (
               <span className="rounded-full bg-primary/10 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-primary">
-                ★ Mest populär
+                ★ Más popular
               </span>
             )}
           </div>
@@ -125,14 +125,14 @@ function ProductPage() {
               ))}
             </div>
             <span className="text-muted-foreground">
-              {product.rating.toFixed(1)} • {product.reviews} recensioner
+              {product.rating.toFixed(1)} • {product.reviews} opiniones
             </span>
           </div>
 
           <p className="mt-5 text-muted-foreground">{product.description}</p>
 
           <div className="mt-5 inline-flex items-center gap-2 rounded-full bg-success/10 px-3 py-1 text-xs font-semibold text-success">
-            <Zap className="h-3.5 w-3.5" /> Direkt nedladdning efter betalning
+            <Zap className="h-3.5 w-3.5" /> Descarga inmediata tras el pago
           </div>
 
           <div className="mt-6 flex items-baseline gap-3">
@@ -148,14 +148,14 @@ function ProductPage() {
               </>
             )}
           </div>
-          <p className="mt-1 text-xs text-muted-foreground">Inkl. moms • Engångsbetalning • SEK</p>
+          <p className="mt-1 text-xs text-muted-foreground">IVA incluido • Pago único • EUR</p>
 
           <button
             onClick={handleBuy}
             disabled={buying}
             className="mt-6 flex w-full items-center justify-center gap-2 rounded-md bg-primary px-6 py-4 text-base font-semibold text-primary-foreground transition hover:opacity-90 disabled:opacity-60"
           >
-            {buying ? <><Loader2 className="h-5 w-5 animate-spin" /> Öppnar säker kassa…</> : <><Download className="h-5 w-5" /> Köp nu & Ladda ner</>}
+            {buying ? <><Loader2 className="h-5 w-5 animate-spin" /> Abriendo el pago seguro…</> : <><Download className="h-5 w-5" /> Comprar y descargar</>}
           </button>
           {error && <p className="mt-2 text-sm text-destructive">{error}</p>}
 
@@ -163,12 +163,12 @@ function ProductPage() {
             onClick={handleAdd}
             className="mt-3 flex w-full items-center justify-center gap-2 rounded-md border border-border bg-card px-6 py-3 text-sm font-semibold hover:bg-accent"
           >
-            {added ? <><Check className="h-4 w-4" /> Tillagd i kundvagn</> : <><ShoppingBag className="h-4 w-4" /> Lägg i kundvagn</>}
+            {added ? <><Check className="h-4 w-4" /> Añadido al carrito</> : <><ShoppingBag className="h-4 w-4" /> Añadir al carrito</>}
           </button>
 
           {/* What's included */}
           <div className="mt-8 rounded-xl border border-border bg-card p-5">
-            <h3 className="text-sm font-bold uppercase tracking-wider text-foreground">Det här ingår</h3>
+            <h3 className="text-sm font-bold uppercase tracking-wider text-foreground">Qué incluye</h3>
             <ul className="mt-3 space-y-2">
               {product.features.map((f: string) => (
                 <li key={f} className="flex items-start gap-2 text-sm">
@@ -176,7 +176,7 @@ function ProductPage() {
                 </li>
               ))}
               <li className="flex items-start gap-2 text-sm">
-                <Check className="mt-0.5 h-4 w-4 shrink-0 text-primary" /> Livstidsåtkomst & obegränsad utskrift
+                <Check className="mt-0.5 h-4 w-4 shrink-0 text-primary" /> Acceso de por vida e impresiones ilimitadas
               </li>
             </ul>
           </div>
@@ -184,24 +184,24 @@ function ProductPage() {
           {/* File details */}
           <dl className="mt-5 grid grid-cols-3 gap-3 rounded-xl border border-border bg-card p-4 text-center text-xs">
             <div>
-              <dt className="text-muted-foreground">Format</dt>
+              <dt className="text-muted-foreground">Formato</dt>
               <dd className="mt-1 flex items-center justify-center gap-1 font-bold"><FileText className="h-3.5 w-3.5" /> PDF</dd>
             </div>
             <div>
-              <dt className="text-muted-foreground">Sidor</dt>
+              <dt className="text-muted-foreground">Páginas</dt>
               <dd className="mt-1 font-bold">{product.pages}</dd>
             </div>
             <div>
-              <dt className="text-muted-foreground">Filstorlek</dt>
+              <dt className="text-muted-foreground">Tamaño del archivo</dt>
               <dd className="mt-1 font-bold">~{fileSize} MB</dd>
             </div>
           </dl>
 
           <div className="mt-5 grid grid-cols-3 gap-3 rounded-xl border border-border bg-card p-4">
             {[
-              { icon: Download, label: "Direkt leverans" },
-              { icon: ShieldCheck, label: "Säker betalning" },
-              { icon: RotateCcw, label: "30 dagars garanti" },
+              { icon: Download, label: "Entrega inmediata" },
+              { icon: ShieldCheck, label: "Pago seguro" },
+              { icon: RotateCcw, label: "Garantía de 30 días" },
             ].map((b) => (
               <div key={b.label} className="flex flex-col items-center gap-1.5 text-center text-xs">
                 <b.icon className="h-5 w-5 text-primary" />
@@ -214,7 +214,7 @@ function ProductPage() {
 
       {/* Reviews */}
       <section className="mt-20">
-        <h2 className="text-2xl font-bold">Kundrecensioner</h2>
+        <h2 className="text-2xl font-bold">Opiniones de clientes</h2>
         <div className="mt-6 grid gap-4 md:grid-cols-3">
           {REVIEWS.map((r) => (
             <div key={r.name} className="rounded-xl border border-border bg-card p-5">
@@ -233,7 +233,7 @@ function ProductPage() {
       {/* Related */}
       {related.length > 0 && (
         <section className="mt-20">
-          <h2 className="text-2xl font-bold">Du kanske också gillar</h2>
+          <h2 className="text-2xl font-bold">También te puede interesar</h2>
           <div className="mt-6 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
             {related.map((p) => <ProductCard key={p.slug} product={p} />)}
           </div>
@@ -245,7 +245,7 @@ function ProductPage() {
         <div className="flex items-center gap-3">
           <div className="flex-1">
             <div className="text-base font-bold leading-none">{formatPrice(product.price)}</div>
-            <div className="mt-0.5 text-[10px] text-muted-foreground">Direkt nedladdning</div>
+            <div className="mt-0.5 text-[10px] text-muted-foreground">Descarga inmediata</div>
           </div>
           <button
             onClick={handleBuy}
@@ -253,7 +253,7 @@ function ProductPage() {
             className="flex items-center gap-2 rounded-md bg-primary px-5 py-3 text-sm font-semibold text-primary-foreground disabled:opacity-60"
           >
             {buying ? <Loader2 className="h-4 w-4 animate-spin" /> : <Download className="h-4 w-4" />}
-            Köp nu
+            Comprar ahora
           </button>
         </div>
       </div>

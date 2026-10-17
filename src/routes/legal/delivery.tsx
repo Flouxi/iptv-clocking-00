@@ -4,61 +4,56 @@ import { LegalLayout } from "@/components/LegalLayout";
 export const Route = createFileRoute("/legal/delivery")({
   head: () => ({
     meta: [
-      { title: "Leveranspolicy — IPNORD4K" },
-      { name: "description", content: "Alla produkter är digitala PDF-filer som levereras inom 2 minuter." },
+      { title: "Política de entrega — IPNORD4K" },
+      { name: "description", content: "Todos los productos son archivos PDF digitales que se entregan en un plazo de 2 minutos." },
     ],
   }),
   component: () => (
-    <LegalLayout title="Leveranspolicy" updated="2026-06-13">
-      <h2>1. Digital leverans</h2>
+    <LegalLayout title="Política de entrega" updated="2026-06-13">
+      <h2>1. Entrega digital</h2>
       <p>
-        Samtliga produkter från IPNORD4K.COM är digitala PDF-filer. Ingen
-        fysisk leverans förekommer — du får aldrig något skickat med post.
+        Todos los productos de IPNORD4K.COM son archivos PDF digitales. No se realiza ningún envío físico ni postal.
       </p>
 
-      <h2>2. Leveranstid</h2>
+      <h2>2. Plazo de entrega</h2>
       <p>
-        Leverans sker omedelbart efter genomförd betalning, normalt inom{" "}
-        <strong>2 minuter</strong>.
+        La entrega se realiza inmediatamente después de completar el pago, normalmente en{" "}
+        <strong>2 minutos</strong>.
       </p>
 
-      <h2>3. Leveranssätt</h2>
+      <h2>3. Método de entrega</h2>
       <ul>
         <li>
-          Du omdirigeras direkt till en tacksida med nedladdningslänk efter
-          betalning.
+          Tras el pago, accederás directamente a una página con el enlace de descarga.
         </li>
         <li>
-          En kopia av länken skickas till den e-postadress du uppgav i kassan.
+          También enviaremos una copia del enlace al correo electrónico indicado al pagar.
         </li>
         <li>
-          Nedladdningslänken är giltig i 30 dagar och kan användas flera gånger.
+          El enlace de descarga es válido durante 30 días y puede utilizarse varias veces.
         </li>
       </ul>
 
-      <h2>4. Om du inte fått din fil</h2>
+      <h2>4. Si no has recibido tu archivo</h2>
       <ol>
-        <li>Kontrollera din skräppost/spam-folder.</li>
+        <li>Revisa la carpeta de spam o correo no deseado.</li>
         <li>
-          Sök efter avsändaren <em>noreply@ipnord4k.com</em> i din inkorg.
+          Busca el remitente <em>noreply@ipnord4k.com</em> en tu bandeja de entrada.
         </li>
         <li>
-          Kontakta{" "}
-          <a href="mailto:support@ipnord4k.com">support@ipnord4k.com</a> med
-          ditt ordernummer så löser vi det inom 24 timmar.
+          Contacta con{" "}
+          <a href="mailto:support@ipnord4k.com">support@ipnord4k.com</a> con tu número de pedido y lo resolveremos en un plazo de 24 horas.
         </li>
       </ol>
 
-      <h2>5. Filformat och teknik</h2>
+      <h2>5. Formato y requisitos técnicos</h2>
       <p>
-        Alla filer levereras som PDF i A4-format, optimerade för utskrift och
-        läsbara på alla moderna enheter (dator, mobil, surfplatta).
+        Todos los archivos se entregan en PDF A4, optimizados para imprimir y compatibles con ordenadores, móviles y tabletas actuales.
       </p>
 
-      <h2>6. Ingen fysisk leverans — någonsin</h2>
+      <h2>6. Sin envíos físicos</h2>
       <p>
-        Vi skickar aldrig fysiska varor. Inga fraktkostnader eller leveransavgifter
-        tillkommer.
+        No enviamos productos físicos. No se aplican gastos de envío ni de entrega.
       </p>
     </LegalLayout>
   ),

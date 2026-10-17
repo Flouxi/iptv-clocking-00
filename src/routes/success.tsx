@@ -9,7 +9,7 @@ export const Route = createFileRoute("/success")({
   validateSearch: (s: Record<string, unknown>) => ({
     session_id: typeof s.session_id === "string" ? s.session_id : undefined,
   }),
-  head: () => ({ meta: [{ title: "Tack för ditt köp — IPNORD4K" }] }),
+  head: () => ({ meta: [{ title: "Gracias por tu compra — IPNORD4K" }] }),
   component: SuccessPage,
 });
 
@@ -34,7 +34,7 @@ function SuccessPage() {
 
   useEffect(() => {
     if (!session_id) {
-      setError("Saknar sessionsinformation.");
+      setError("Falta la información de la sesión.");
       setLoading(false);
       return;
     }
@@ -44,7 +44,7 @@ function SuccessPage() {
         setPaid(res.paid);
         clear();
       })
-      .catch((e) => setError(e?.message ?? "Något gick fel"))
+      .catch((e) => setError(e?.message ?? "Se ha producido un error"))
       .finally(() => setLoading(false));
   }, [session_id]);
 
@@ -52,7 +52,7 @@ function SuccessPage() {
     return (
       <div className="container-page py-24 text-center">
         <Loader2 className="mx-auto h-8 w-8 animate-spin text-primary" />
-        <p className="mt-4 text-muted-foreground">Bekräftar din betalning…</p>
+        <p className="mt-4 text-muted-foreground">Confirmando tu pago…</p>
       </div>
     );
   }
@@ -62,12 +62,12 @@ function SuccessPage() {
       <div className="container-page py-20">
         <div className="mx-auto max-w-xl rounded-2xl border border-border bg-card p-10 text-center">
           <AlertTriangle className="mx-auto h-12 w-12 text-destructive" />
-          <h1 className="mt-4 text-2xl font-bold">Något gick fel</h1>
+          <h1 className="mt-4 text-2xl font-bold">Se ha producido un error</h1>
           <p className="mt-2 text-muted-foreground">
-            {error ?? "Vi kunde inte hitta din order."}
+            {error ?? "No hemos podido encontrar tu pedido."}
           </p>
           <Link to="/contact" className="mt-6 inline-block text-primary hover:underline">
-            Kontakta support →
+            Contactar con soporte →
           </Link>
         </div>
       </div>
@@ -83,11 +83,11 @@ function SuccessPage() {
           <div className="mx-auto grid h-16 w-16 place-items-center rounded-full bg-success/10">
             <CheckCircle2 className="h-9 w-9 text-success" />
           </div>
-          <h1 className="mt-5 text-3xl font-bold sm:text-4xl">Tack för ditt köp!</h1>
+          <h1 className="mt-5 text-3xl font-bold sm:text-4xl">¡Gracias por tu compra!</h1>
           <p className="mt-3 text-muted-foreground">
-            Din betalning är bekräftad. En kopia av kvittot och nedladdningslänken har skickats till{" "}
+            Tu pago está confirmado. Hemos enviado una copia del recibo y el enlace de descarga a{" "}
             <span className="font-semibold text-foreground">
-              {order.customer_email ?? "din e-postadress"}
+              {order.customer_email ?? "tu correo electrónico"}
             </span>
             .
           </p>
@@ -120,11 +120,11 @@ function SuccessPage() {
           href={`/api/public/download/${order.download_token}`}
           className="mt-6 flex w-full items-center justify-center gap-2 rounded-md bg-primary px-6 py-4 text-base font-semibold text-primary-foreground transition hover:opacity-90"
         >
-          <Download className="h-5 w-5" /> Ladda ner din PDF
+          <Download className="h-5 w-5" /> Descargar tu PDF
         </a>
 
         <p className="mt-4 text-center text-xs text-muted-foreground">
-          Din nedladdningslänk är aktiv direkt och giltig i 30 dagar.
+          Tu enlace de descarga está disponible inmediatamente y es válido durante 30 días.
         </p>
 
         <div className="mt-8 flex justify-center gap-3">
@@ -132,13 +132,13 @@ function SuccessPage() {
             to="/shop"
             className="rounded-md border border-border bg-card px-5 py-2.5 text-sm font-semibold hover:bg-accent"
           >
-            Fortsätt handla
+            Seguir comprando
           </Link>
           <Link
             to="/"
             className="rounded-md bg-navy px-5 py-2.5 text-sm font-semibold text-navy-foreground hover:opacity-90"
           >
-            Till startsidan
+            Volver al inicio
           </Link>
         </div>
       </div>

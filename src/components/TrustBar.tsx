@@ -1,10 +1,10 @@
 import { Download, ShieldCheck, RotateCcw, Users } from "lucide-react";
 
 const ITEMS = [
-  { icon: Download, label: "Leverans inom 2 minuter" },
-  { icon: ShieldCheck, label: "Säker betalning" },
-  { icon: RotateCcw, label: "30 dagars nöjdhetsgaranti" },
-  { icon: Users, label: "1 000+ nöjda kunder" },
+  { icon: Download, label: "Entrega en 2 minutos" },
+  { icon: ShieldCheck, label: "Pago seguro" },
+  { icon: RotateCcw, label: "Garantía de satisfacción de 30 días" },
+  { icon: Users, label: "Más de 1.000 clientes satisfechos" },
 ];
 
 export function TrustBar() {

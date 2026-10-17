@@ -27,11 +27,11 @@ export function ProductCard({ product }: { product: Product }) {
         )}
         {product.popular && (
           <span className="absolute left-3 bottom-3 rounded-md bg-primary px-2 py-1 text-[10px] font-bold uppercase tracking-wider text-primary-foreground shadow-md">
-            ★ Mest populär
+            ★ Más popular
           </span>
         )}
         <span className="absolute right-3 top-3 rounded-md bg-navy/85 px-2 py-1 text-[10px] font-semibold uppercase tracking-wider text-white backdrop-blur">
-          PDF • {product.pages} sid
+          {product.category === "iptv" ? "IPTV • 4K UHD" : `PDF • ${product.pages} pág.`}
         </span>
       </div>
 

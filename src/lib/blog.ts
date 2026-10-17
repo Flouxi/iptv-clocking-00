@@ -20,213 +20,75 @@ import b6 from "@/assets/product-realestate.jpg";
 export const BLOG_POSTS: BlogPost[] = [
   {
     slug: "starta-eget-foretag-checklista-2026",
-    title: "Starta eget företag i Sverige 2026 — komplett checklista",
+    title: "Crear una empresa en Suecia en 2026: lista de pasos completa",
     excerpt:
-      "Från affärsidé till första fakturan: 12 steg som hjälper dig att registrera, strukturera och växa ditt företag på rätt sätt.",
+      "De la idea a la primera factura: 12 pasos para registrar, organizar y hacer crecer tu empresa.",
     date: "2026-05-12",
     readMinutes: 9,
-    author: "IPNORD4K Redaktion",
-    category: "Företagande",
+    author: "Equipo editorial de IPNORD4K",
+    category: "Emprendimiento",
     image: b1,
-    content: `
-<p>Att starta eget i Sverige är enklare än många tror — men det finns en handfull steg som verkligen avgör om resan blir smidig eller stressig. I den här guiden går vi igenom hela processen, från första idé till första fakturan.</p>
-
-<h2>1. Validera din affärsidé</h2>
-<p>Innan du registrerar ett bolag, prata med minst 10 potentiella kunder. Notera vad de faktiskt är villiga att betala för — inte bara vad de "tycker är intressant".</p>
-
-<h2>2. Välj bolagsform</h2>
-<p>De vanligaste formerna är <strong>enskild firma</strong> och <strong>aktiebolag</strong>. För omsättningar under ~300 000 kr/år räcker oftast enskild firma. Över det blir AB skattemässigt fördelaktigt.</p>
-
-<h2>3. Registrera hos Bolagsverket och Skatteverket</h2>
-<p>Båda kan göras digitalt via <em>verksamt.se</em>. Räkna med 2–4 veckors handläggning.</p>
-
-<h2>4. Sätt upp bokföring från dag ett</h2>
-<p>Använd ett enkelt molnprogram (Fortnox, Bokio, Visma). Spara <strong>alla</strong> kvitton — Skatteverket kräver det i 7 år.</p>
-
-<h2>5. Skaffa F-skattsedel</h2>
-<p>Utan F-skatt måste dina kunder dra preliminärskatt. Ansökan sker samtidigt som företagsregistreringen.</p>
-
-<h2>6. Öppna företagskonto</h2>
-<p>Håll privat och företag helt separat — det sparar dig timmar vid bokslut.</p>
-
-<h2>7. Försäkringar</h2>
-<p>Ansvarsförsäkring och inkomstförsäkring är ett minimum för de flesta soloföretagare.</p>
-
-<h2>8. Prissättning</h2>
-<p>Räkna med minst 30 % overhead, semester, sjukdagar och pension när du sätter ditt timpris.</p>
-
-<h2>9. Avtal och villkor</h2>
-<p>Använd alltid skriftliga uppdragsavtal. Det skyddar både dig och kunden.</p>
-
-<h2>10. Marknadsföring</h2>
-<p>Bygg en enkel hemsida, en LinkedIn-profil och be om referenser från dina första kunder.</p>
-
-<h2>11. Första fakturan</h2>
-<p>Inkludera ditt organisationsnummer, momsregistreringsnummer och tydliga betalvillkor (oftast 30 dagar netto).</p>
-
-<h2>12. Skala upp</h2>
-<p>När du har 3 betalande kunder — börja systematisera. Mallar, automationer och tydliga processer är skillnaden mellan ett jobb och ett företag.</p>
-
-<p><em>Ladda ner vår <a href="/product/ultimate-entrepreneur-bundle">Ultimate Entrepreneur Bundle</a> för färdiga mallar till varje steg ovan.</em></p>
-`,
+    content: "\n<p>Crear una empresa en Suecia resulta más sencillo de lo que parece, pero algunos pasos son decisivos para que el proceso sea ordenado. Esta guía recorre el camino desde la primera idea hasta la primera factura.</p>\n<h2>1. Valida tu idea de negocio</h2><p>Antes de registrar la empresa, habla con al menos 10 clientes potenciales. Anota por qué estarían dispuestos a pagar, además de lo que les parece interesante.</p>\n<h2>2. Elige la forma jurídica</h2><p>Las opciones más habituales en Suecia son <strong>enskild firma</strong> y <strong>aktiebolag</strong>. La guía original toma como referencia una facturación aproximada de 300.000 SEK al año para comparar ambas opciones; la elección depende de la situación del negocio.</p>\n<h2>3. Regístrate en Bolagsverket y Skatteverket</h2><p>Ambos trámites pueden realizarse por internet mediante <em>verksamt.se</em>. El plazo indicado es de 2 a 4 semanas.</p>\n<h2>4. Organiza la contabilidad desde el primer día</h2><p>Utiliza una herramienta en la nube como Fortnox, Bokio o Visma. Conserva <strong>todos</strong> los justificantes durante el plazo de conservación contable de 7 años indicado en esta guía.</p>\n<h2>5. Solicita el registro F-skatt</h2><p>Sin este registro, tus clientes pueden tener que practicar retenciones fiscales. La solicitud se presenta junto con el registro de la empresa.</p>\n<h2>6. Abre una cuenta empresarial</h2><p>Separa las finanzas personales de las del negocio para facilitar el cierre contable.</p>\n<h2>7. Seguros</h2><p>Valora un seguro de responsabilidad civil y otro de protección de ingresos para tu actividad.</p>\n<h2>8. Fija tus precios</h2><p>Al calcular tu tarifa por hora, incluye los gastos generales, vacaciones, bajas y aportaciones para la jubilación.</p>\n<h2>9. Contratos y condiciones</h2><p>Utiliza acuerdos escritos para proteger tanto a tu empresa como al cliente.</p>\n<h2>10. Marketing</h2><p>Crea una web sencilla, un perfil de LinkedIn y solicita referencias a tus primeros clientes.</p>\n<h2>11. La primera factura</h2><p>Incluye los números de registro e IVA y unas condiciones de pago claras, normalmente de 30 días.</p>\n<h2>12. Haz crecer tu negocio</h2><p>Cuando tengas tres clientes de pago, empieza a sistematizar tu trabajo con plantillas, automatizaciones y procesos claros.</p>\n<p><em>Descarga nuestro <a href=\"/product/ultimate-entrepreneur-bundle\">paquete completo para emprendedores</a> para acceder a plantillas relacionadas con estos pasos.</em></p>\n",
   },
   {
     slug: "budgetmall-smaforetag",
-    title: "Så bygger du en budget som faktiskt fungerar för ditt småföretag",
+    title: "Cómo preparar un presupuesto útil para tu pequeña empresa",
     excerpt:
-      "En realistisk budget är skillnaden mellan att överleva tuffa månader och att gå i konkurs. Här är ramverket vi själva använder.",
+      "Un presupuesto realista ayuda a superar los meses difíciles. Este es el método que utilizamos.",
     date: "2026-04-28",
     readMinutes: 7,
     author: "Erik Lindberg",
-    category: "Ekonomi",
+    category: "Finanzas",
     image: b2,
-    content: `
-<p>De flesta småföretagare gör samma misstag: de bygger en optimistisk budget i januari och tittar aldrig på den igen. Den här guiden visar hur du gör en levande budget som faktiskt styr ditt företag.</p>
-
-<h2>Steg 1: Lista alla fasta kostnader</h2>
-<p>Hyra, licenser, försäkringar, bokföring, telefon. Allt som dras varje månad oavsett om du säljer eller inte.</p>
-
-<h2>Steg 2: Identifiera rörliga kostnader</h2>
-<p>Material, frakt, provisioner — kostnader som följer omsättningen.</p>
-
-<h2>Steg 3: Sätt en realistisk omsättningsprognos</h2>
-<p>Använd förra årets siffror minus 10 % som baseline. Bättre att överraskas positivt än tvärtom.</p>
-
-<h2>Steg 4: Bygg in en buffert</h2>
-<p>Sätt undan minst 3 månaders fasta kostnader på ett separat sparkonto.</p>
-
-<h2>Steg 5: Följ upp varje månad</h2>
-<p>Avsätt 30 minuter den första vardagen varje månad för att jämföra budget mot utfall. Det är där värdet skapas.</p>
-
-<p>Vill du slippa börja från noll? Vår <a href="/product/foretagsbudget">Företagsbudget-mall</a> ger dig hela ramverket i en redigerbar PDF.</p>
-`,
+    content: "\n<p>Muchas pequeñas empresas preparan un presupuesto optimista en enero y no vuelven a consultarlo. Esta guía explica cómo convertirlo en una herramienta de gestión diaria.</p>\n<h2>Paso 1: Anota los gastos fijos</h2><p>Alquiler, licencias, seguros, contabilidad y teléfono: todos los gastos mensuales que existen aunque no vendas.</p>\n<h2>Paso 2: Identifica los gastos variables</h2><p>Materiales, transporte y comisiones: los costes que cambian con la facturación.</p>\n<h2>Paso 3: Prepara una previsión realista</h2><p>Utiliza las cifras del año anterior menos un 10 % como punto de partida. Es preferible una sorpresa positiva.</p>\n<h2>Paso 4: Crea un fondo de reserva</h2><p>Reserva al menos tres meses de gastos fijos en una cuenta de ahorro separada.</p>\n<h2>Paso 5: Revisa las cifras cada mes</h2><p>Dedica 30 minutos el primer día laborable de cada mes a comparar el presupuesto con los resultados reales.</p>\n<p>¿Prefieres no empezar desde cero? Nuestro <a href=\"/product/small-business-starter-kit\">kit de inicio para pequeñas empresas</a> incluye plantillas para organizar tus finanzas.</p>\n",
   },
   {
     slug: "marknadsforing-instagram-svenska-foretag",
-    title: "Marknadsföring på Instagram för svenska företag — 2026-guiden",
+    title: "Marketing en Instagram para empresas suecas: guía de 2026",
     excerpt:
-      "Algoritmen har förändrats igen. Så här bygger du räckvidd och försäljning utan att lägga en krona på annonser.",
+      "El algoritmo ha vuelto a cambiar. Aprende a aumentar tu alcance y tus ventas sin invertir en anuncios.",
     date: "2026-04-10",
     readMinutes: 8,
     author: "Sara Nilsson",
-    category: "Marknadsföring",
+    category: "Marketing",
     image: b3,
-    content: `
-<p>Instagram är fortfarande en av de mest kostnadseffektiva kanalerna för svenska småföretag — om du gör det rätt.</p>
-
-<h2>Vad fungerar 2026</h2>
-<ul>
-<li><strong>Reels</strong> får fortfarande mest organisk räckvidd</li>
-<li><strong>Karuseller</strong> är bäst för sparningar och delningar</li>
-<li><strong>Stories</strong> bygger relation med befintliga följare</li>
-</ul>
-
-<h2>Innehållsplan på 4 veckor</h2>
-<p>Publicera 3 inlägg per vecka enligt: 1 utbildande, 1 inspirerande, 1 säljande. Variera format mellan reels och karuseller.</p>
-
-<h2>Skapa en visuell identitet</h2>
-<p>Tre färger, två typsnitt, en mallserie. Det är allt du behöver för att se professionell ut.</p>
-
-<p>Vår <a href="/product/social-media-toolkit">Social Media Toolkit</a> innehåller 30 färdiga mallar i Canva-format för exakt detta.</p>
-`,
+    content: "\n<p>Instagram sigue siendo un canal de marketing rentable para las pequeñas empresas suecas cuando se utiliza con una estrategia clara.</p>\n<h2>Qué funciona en 2026</h2><ul><li>Los <strong>reels</strong> destacan por su alcance orgánico.</li><li>Los <strong>carruseles</strong> favorecen que se guarde y comparta el contenido.</li><li>Las <strong>stories</strong> ayudan a mantener la relación con tus seguidores.</li></ul>\n<h2>Plan de contenidos de cuatro semanas</h2><p>Publica tres veces por semana: una publicación educativa, otra inspiradora y otra comercial. Alterna reels y carruseles.</p>\n<h2>Crea una identidad visual</h2><p>Tres colores, dos tipografías y una serie de plantillas ayudan a presentar una imagen profesional.</p>\n<p>Nuestro <a href=\"/product/social-media-content-calendar\">calendario de contenidos para redes sociales</a> te ayuda a organizar las publicaciones.</p>\n",
   },
   {
     slug: "produktivitet-veckoplanering",
-    title: "Veckoplanering: metoden som ger dig 10 extra timmar i veckan",
+    title: "Planificación semanal: un método para ganar 10 horas cada semana",
     excerpt:
-      "Veckoplanering är inte att skriva en lång att-göra-lista. Det är att medvetet välja vad du INTE ska göra.",
+      "Planificar la semana no consiste en hacer una lista interminable, sino en decidir conscientemente qué tareas no vas a hacer.",
     date: "2026-03-22",
     readMinutes: 6,
     author: "Mikael Sjöberg",
-    category: "Produktivitet",
+    category: "Productividad",
     image: b4,
-    content: `
-<p>Den största produktivitetsvinsten kommer sällan från ett nytt verktyg — utan från en bättre process. Här är vår enkla veckoplaneringsrutin.</p>
-
-<h2>Söndag kväll: 25 minuter</h2>
-<ol>
-<li>Granska föregående vecka — vad blev klart, vad blev inte?</li>
-<li>Välj <strong>tre</strong> viktigaste resultat för kommande vecka</li>
-<li>Boka in tid i kalendern för dessa tre — inte bara på listan</li>
-<li>Identifiera vad du <em>inte</em> ska göra</li>
-</ol>
-
-<h2>Varje morgon: 5 minuter</h2>
-<p>Definiera dagens "en sak" — den viktigaste uppgiften. Allt annat är bonus.</p>
-
-<h2>Fredag eftermiddag: 15 minuter</h2>
-<p>Stäng veckan med en kort retrospektiv. Vad funkade? Vad ska bort?</p>
-
-<p>Använd vår <a href="/product/veckoplanerare">utskrivbara veckoplanerare</a> för att komma igång direkt.</p>
-`,
+    content: "\n<p>La mayor mejora de productividad suele venir de un proceso más claro, no de una herramienta nueva. Esta es nuestra rutina semanal.</p>\n<h2>Domingo por la tarde: 25 minutos</h2><ol><li>Revisa la semana anterior: qué terminaste y qué quedó pendiente.</li><li>Elige los <strong>tres</strong> resultados más importantes de la próxima semana.</li><li>Reserva tiempo en tu calendario para conseguirlos.</li><li>Decide qué tareas <em>no</em> vas a hacer.</li></ol>\n<h2>Cada mañana: 5 minutos</h2><p>Define la tarea más importante del día. Todo lo demás será un avance adicional.</p>\n<h2>Viernes por la tarde: 15 minutos</h2><p>Cierra la semana con una revisión breve: qué funcionó y qué debes dejar de hacer.</p>\n<p>Empieza con nuestro <a href=\"/product/annual-goal-project-planner\">planificador de objetivos y proyectos</a>.</p>\n",
   },
   {
     slug: "anstall-forsta-medarbetaren",
-    title: "Anställ din första medarbetare — undvik de 7 vanligaste misstagen",
+    title: "Contratar a tu primer empleado: evita los 7 errores más habituales",
     excerpt:
-      "Första anställningen är ett av de viktigaste besluten i ett företags liv. Här är vad ingen berättar för dig i förväg.",
+      "La primera contratación es una decisión clave para cualquier empresa. Esto es lo que debes saber antes de dar el paso.",
     date: "2026-03-05",
     readMinutes: 8,
     author: "Anna Lundgren",
     category: "HR",
     image: b5,
-    content: `
-<p>Att gå från solo-företagare till arbetsgivare är ett kvantsprång. Med rätt förberedelser blir det en av dina bästa investeringar — utan dem en mardröm.</p>
-
-<h2>Misstag 1: Anställa för tidigt</h2>
-<p>Tumregel: du ska ha minst 6 månaders lön på banken plus arbetsgivaravgifter innan du rekryterar.</p>
-
-<h2>Misstag 2: Otydliga arbetsuppgifter</h2>
-<p>Skriv en detaljerad rollbeskrivning med tydliga mål. Annars vet ingen om det funkar.</p>
-
-<h2>Misstag 3: Hoppa över introduktion</h2>
-<p>De första 90 dagarna avgör om personen stannar i 3 år eller 6 månader.</p>
-
-<h2>Misstag 4: Glömma kollektivavtal</h2>
-<p>Även utan kollektivavtal måste du följa LAS, semesterlagen och arbetsmiljölagen.</p>
-
-<h2>Misstag 5: Ingen anställningsavtal</h2>
-<p>Skriftligt avtal är obligatoriskt enligt lag inom en månad från anställning.</p>
-
-<h2>Misstag 6: Underskatta administrationen</h2>
-<p>Lönebesked, AGI, arbetsgivardeklaration, pension. Ta hjälp av en lönetjänst.</p>
-
-<h2>Misstag 7: Inte fira</h2>
-<p>Första anställningen är en milstolpe. Markera den.</p>
-
-<p>Vår <a href="/product/hr-kit">HR-startkit</a> innehåller färdiga mallar för anställningsavtal, introduktionsplan och medarbetarsamtal.</p>
-`,
+    content: "\n<p>Pasar de trabajar por tu cuenta a contratar personal supone un gran cambio. Prepararlo bien puede convertirlo en una buena inversión.</p>\n<h2>Error 1: Contratar demasiado pronto</h2><p>Como referencia, reserva al menos seis meses de salario y las cotizaciones empresariales antes de contratar.</p>\n<h2>Error 2: No definir las tareas</h2><p>Redacta una descripción detallada del puesto con objetivos claros para poder evaluar los resultados.</p>\n<h2>Error 3: Omitir la incorporación</h2><p>Los primeros 90 días son decisivos para la integración y la permanencia en la empresa.</p>\n<h2>Error 4: Olvidar los convenios colectivos</h2><p>En Suecia, también debes tener en cuenta la normativa laboral, de vacaciones y de prevención de riesgos aplicable aunque no exista convenio colectivo.</p>\n<h2>Error 5: No preparar un contrato</h2><p>Formaliza las condiciones de trabajo por escrito dentro de los plazos legales aplicables.</p>\n<h2>Error 6: Subestimar la administración</h2><p>Nóminas, declaraciones de empleador, cotizaciones y pensiones requieren tiempo. Valora recurrir a un servicio de nóminas.</p>\n<h2>Error 7: No celebrarlo</h2><p>La primera contratación es un hito para tu empresa. Dedica un momento a reconocerlo.</p>\n<p>Nuestro <a href=\"/product/complete-hr-starter-kit\">kit de recursos humanos</a> contiene plantillas de contratos, planes de incorporación y evaluaciones de personal.</p>\n",
   },
   {
     slug: "saker-betalning-online-svenska-kunder",
-    title: "Säker betalning online — vad svenska kunder förväntar sig 2026",
+    title: "Pagos seguros por internet: qué esperan los clientes suecos en 2026",
     excerpt:
-      "Förtroende är den nya konverteringsoptimeringen. Så här bygger du en kassaupplevelse svenska kunder litar på.",
+      "La confianza es esencial para vender. Así puedes ofrecer una experiencia de pago que inspire seguridad.",
     date: "2026-02-18",
     readMinutes: 6,
-    author: "IPNORD4K Redaktion",
-    category: "E-handel",
+    author: "Equipo editorial de IPNORD4K",
+    category: "Comercio electrónico",
     image: b6,
-    content: `
-<p>Svenska konsumenter är bland världens mest betalningsvana — och bland de mest kräsna när det kommer till säkerhet.</p>
-
-<h2>Måsten i kassan</h2>
-<ul>
-<li>Stöd för <strong>kort</strong> (Visa, Mastercard, Amex)</li>
-<li>Stöd för <strong>Klarna</strong> — minst hälften av svenska köpare väljer det</li>
-<li>Tydlig SSL-säkerhet (HTTPS hela vägen)</li>
-<li>Synliga betallogotyper i footern</li>
-<li>Transparent leveranspolicy och returrätt</li>
-</ul>
-
-<h2>Förtroendesignaler som ökar konvertering</h2>
-<p>Kundrecensioner, organisationsnummer i footern, tydlig kontaktinformation och GDPR-anpassad cookiepolicy.</p>
-
-<h2>Vår betalningsinfrastruktur</h2>
-<p>IPNORD4K använder Stripe för all kortbetalning och Klarna för faktura/delbetalning. Vi lagrar aldrig kortuppgifter på vår server — all hantering sker hos PCI-DSS-certifierade leverantörer.</p>
-
-<p>Läs mer i vår <a href="/legal/privacy">integritetspolicy</a> och <a href="/legal/refund">återbetalningspolicy</a>.</p>
-`,
+    content: "\n<p>Los consumidores suecos utilizan habitualmente los pagos digitales y prestan atención a la seguridad de sus compras.</p>\n<h2>Elementos esenciales al pagar</h2><ul><li>Pago con <strong>tarjeta</strong>, como Visa, Mastercard y American Express.</li><li>Métodos de pago adecuados para el cliente, como <strong>Klarna</strong> cuando esté disponible.</li><li>Conexión segura mediante HTTPS.</li><li>Logotipos de pago visibles.</li><li>Políticas de entrega y devolución transparentes.</li></ul>\n<h2>Señales que generan confianza</h2><p>Opiniones de clientes, número de registro empresarial, datos de contacto claros y una política de cookies adaptada al RGPD.</p>\n<h2>Nuestra infraestructura de pago</h2><p>IPNORD4K utiliza Stripe para gestionar los pagos. Los métodos disponibles se muestran en su página de pago. No guardamos datos de tarjetas en nuestro servidor: su tratamiento se realiza mediante proveedores certificados según PCI-DSS.</p>\n<p>Consulta nuestra <a href=\"/legal/privacy\">política de privacidad</a> y nuestra <a href=\"/legal/refund\">política de reembolsos</a>.</p>\n",
   },
 ];
 
@@ -235,5 +97,5 @@ export function getPost(slug: string) {
 }
 
 export function formatDate(iso: string) {
-  return new Date(iso).toLocaleDateString("sv-SE", { year: "numeric", month: "long", day: "numeric" });
+  return new Date(iso).toLocaleDateString("es-ES", { year: "numeric", month: "long", day: "numeric" });
 }

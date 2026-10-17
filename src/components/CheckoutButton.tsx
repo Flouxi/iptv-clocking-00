@@ -13,7 +13,7 @@ export function CheckoutButton({
   productSlug,
   productName,
   className = '',
-  children = 'Buy Now',
+  children = "Comprar ahora",
 }: CheckoutButtonProps) {
   const [customerEmail, setCustomerEmail] = useState('');
   const [showEmailInput, setShowEmailInput] = useState(false);
@@ -34,7 +34,7 @@ export function CheckoutButton({
 
       if (!response.ok) {
         const error = await response.json();
-        throw new Error(error.error || 'Checkout failed');
+        throw new Error(error.error || "No se pudo iniciar el pago");
       }
 
       return response.json();
@@ -60,7 +60,7 @@ export function CheckoutButton({
       <div className={`flex flex-col gap-2 ${className}`}>
         <input
           type="email"
-          placeholder="your@email.com"
+          placeholder="tu@correo.com"
           value={customerEmail}
           onChange={(e) => setCustomerEmail(e.target.value)}
           className="px-3 py-2 border border-input rounded-md text-sm"
@@ -73,7 +73,7 @@ export function CheckoutButton({
             variant="default"
             className="flex-1"
           >
-            {checkoutMutation.isPending ? 'Processing...' : 'Checkout'}
+            {checkoutMutation.isPending ? "Procesando..." : "Pagar"}
           </Button>
           <Button
             onClick={() => {
@@ -83,14 +83,14 @@ export function CheckoutButton({
             disabled={checkoutMutation.isPending}
             variant="outline"
           >
-            Cancel
+            Cancelar
           </Button>
         </div>
         {checkoutMutation.error && (
           <p className="text-xs text-red-600">
             {checkoutMutation.error instanceof Error
               ? checkoutMutation.error.message
-              : 'An error occurred'}
+              : "Se ha producido un error"}
           </p>
         )}
       </div>

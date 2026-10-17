@@ -35,25 +35,19 @@ export const createCheckoutSession = createServerFn({ method: "POST" })
     const proto = host.startsWith("localhost") ? "http" : "https";
     const origin = `${proto}://${host}`;
 
-    // Stripe expects amounts in the smallest unit (öre for SEK).
-    const amountOre = Math.round(product.price * 100);
+    // Catalog prices are euros; Stripe stores integer euro cents.
+    const amountCents = Math.round(product.price * 100);
 
     const form = new URLSearchParams();
     form.append("mode", "payment");
     form.append("success_url", `${origin}/success?session_id={CHECKOUT_SESSION_ID}`);
     form.append("cancel_url", `${origin}/product/${product.slug}`);
-    form.append("payment_method_types[]", "card");
-    form.append("payment_method_types[]", "klarna");
-    form.append("locale", "sv");
+    form.append("locale", "es");
     form.append("billing_address_collection", "auto");
     form.append("line_items[0][quantity]", "1");
-    form.append("line_items[0][price_data][currency]", "sek");
-    form.append("line_items[0][price_data][unit_amount]", String(amountOre));
-    form.append("line_items[0][price_data][product_data][name]", product.name);
-    form.append(
-      "line_items[0][price_data][product_data][description]",
-      product.short.slice(0, 250),
-    );
+    const { syncProductToStripe } = await import("./stripe.server");
+    const synced = await syncProductToStripe(product);
+    form.append("line_items[0][price]", synced.priceId);
     form.append("metadata[product_slug]", product.slug);
 
     const res = await fetch("https://api.stripe.com/v1/checkout/sessions", {
@@ -85,8 +79,8 @@ export const createCheckoutSession = createServerFn({ method: "POST" })
         stripe_session_id: session.id,
         product_slug: product.slug,
         product_name: product.name,
-        amount_total: amountOre,
-        currency: "sek",
+        amount_total: amountCents,
+        currency: "eur",
         status: "pending",
       });
     } catch (err) {

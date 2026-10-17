@@ -49,7 +49,7 @@ export async function POST({ request }: { request: Request }) {
         stripe_price_id: syncedProduct.priceId,
         product_name: product.name,
         price_amount: product.price,
-        currency: 'sek',
+        currency: 'eur',
       }, {
         onConflict: 'product_slug',
       });

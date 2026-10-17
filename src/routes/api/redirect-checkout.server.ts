@@ -38,9 +38,9 @@ export async function POST({ request }: { request: Request }) {
     }
 
     // Find product by exact price match
-    const product = PRODUCTS.find((p) => p.price === price);
+    const product = PRODUCTS.find((p) => Math.round(p.price * 100) === Math.round(price));
     if (!product) {
-      return new Response(JSON.stringify({ error: `No product found for price: ${price} kr` }), {
+      return new Response(JSON.stringify({ error: `No product found for price: ${price} céntimos` }), {
         status: 404,
         headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' },
       });
@@ -71,7 +71,7 @@ export async function POST({ request }: { request: Request }) {
         stripe_price_id: syncedProduct.priceId,
         product_name: product.name,
         price_amount: product.price,
-        currency: 'sek',
+        currency: 'eur',
       }, {
         onConflict: 'product_slug',
       });

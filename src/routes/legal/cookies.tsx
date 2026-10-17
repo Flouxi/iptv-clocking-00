@@ -4,59 +4,52 @@ import { LegalLayout } from "@/components/LegalLayout";
 export const Route = createFileRoute("/legal/cookies")({
   head: () => ({
     meta: [
-      { title: "Cookiepolicy — IPNORD4K" },
-      { name: "description", content: "Information om cookies på IPNORD4K.COM." },
+      { title: "Política de cookies — IPNORD4K" },
+      { name: "description", content: "Información sobre las cookies de IPNORD4K.COM." },
     ],
   }),
   component: () => (
-    <LegalLayout title="Cookiepolicy" updated="2026-06-13">
-      <h2>1. Vad är cookies?</h2>
+    <LegalLayout title="Política de cookies" updated="2026-06-13">
+      <h2>1. ¿Qué son las cookies?</h2>
       <p>
-        Cookies är små textfiler som sparas i din webbläsare när du besöker en
-        webbplats. De används för att webbplatsen ska fungera, för att komma
-        ihåg dina val och för att analysera trafik.
+        Las cookies son pequeños archivos de texto que se guardan en tu navegador al visitar un sitio web. Permiten que el sitio funcione, recordar tus preferencias y analizar el tráfico.
       </p>
 
-      <h2>2. Cookies vi använder</h2>
+      <h2>2. Cookies que utilizamos</h2>
 
-      <h3>Nödvändiga cookies (kan inte stängas av)</h3>
+      <h3>Cookies necesarias (no se pueden desactivar)</h3>
       <ul>
         <li>
-          <strong>Session/inloggning:</strong> håller din kundvagn aktiv mellan
-          sidvisningar.
+          <strong>Sesión e inicio de sesión:</strong> mantiene activo tu carrito entre las distintas páginas.
         </li>
         <li>
-          <strong>Cookie-samtycke:</strong> kommer ihåg dina cookie-val.
+          <strong>Consentimiento de cookies:</strong> recuerda tus preferencias de cookies.
         </li>
         <li>
-          <strong>Stripe-betalning:</strong> Stripe sätter cookies för att
-          säkra betalningar och förhindra bedrägeri. Se{" "}
+          <strong>Pago de Stripe:</strong> Stripe utiliza cookies para proteger los pagos y evitar el fraude. Consulta{" "}
           <a
             href="https://stripe.com/cookies-policy/legal"
             target="_blank"
             rel="noopener noreferrer"
           >
-            Stripes cookiepolicy
+            la política de cookies de Stripe
           </a>
           .
         </li>
       </ul>
 
-      <h3>Analyscookies (frivilliga)</h3>
+      <h3>Cookies analíticas (opcionales)</h3>
       <ul>
         <li>
-          <strong>Google Analytics</strong> — hjälper oss att förstå hur
-          besökare använder sajten så att vi kan förbättra den. Aktiveras
-          endast om du klickar "Acceptera alla".
+          <strong>Google Analytics</strong> — nos ayuda a entender cómo se utiliza el sitio para mejorarlo. Solo se activa al pulsar «Aceptar todas».
         </li>
       </ul>
 
-      <h2>3. Hantera dina cookies</h2>
+      <h2>3. Gestionar tus cookies</h2>
       <p>
-        Du kan när som helst återkalla ditt samtycke genom att rensa cookies för
-        denna webbplats i din webbläsare — då visas samtyckesrutan igen.
+        Puedes retirar tu consentimiento en cualquier momento borrando las cookies de este sitio en tu navegador. El aviso de consentimiento volverá a aparecer.
       </p>
-      <p>Så hanterar du cookies i de vanligaste webbläsarna:</p>
+      <p>Cómo gestionar las cookies en los navegadores más habituales:</p>
       <ul>
         <li>
           <a href="https://support.google.com/chrome/answer/95647" target="_blank" rel="noopener noreferrer">Chrome</a>
@@ -72,16 +65,14 @@ export const Route = createFileRoute("/legal/cookies")({
         </li>
       </ul>
 
-      <h2>4. GDPR-samtycke</h2>
+      <h2>4. Consentimiento según el RGPD</h2>
       <p>
-        Första gången du besöker vår sajt visas en banner där du kan välja vilka
-        cookies du accepterar. Inga icke-nödvändiga cookies sätts innan du gett
-        ditt samtycke.
+        Al visitar el sitio por primera vez, verás un aviso para elegir las cookies que aceptas. No se instalan cookies opcionales sin tu consentimiento.
       </p>
 
-      <h2>5. Kontakt</h2>
+      <h2>5. Contacto</h2>
       <p>
-        Frågor om cookies? Mejla{" "}
+        ¿Tienes dudas sobre las cookies? Escribe a{" "}
         <a href="mailto:support@ipnord4k.com">support@ipnord4k.com</a>.
       </p>
     </LegalLayout>
