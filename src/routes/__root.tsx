@@ -10,6 +10,7 @@ import {
 } from "@tanstack/react-router";
 import { useEffect, type ReactNode } from "react";
 
+import { startPdfAttribution } from "@/lib/orbitra-attribution";
 import appCss from "../styles.css?url";
 import faviconAsset from "@/assets/ipnord4k-favicon.png.asset.json";
 import { reportLovableError } from "../lib/lovable-error-reporting";
@@ -118,6 +119,15 @@ function RootShell({ children }: { children: ReactNode }) {
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
   const isTvCheckout = useRouterState({ select: s => s.location.pathname === '/tv' || s.location.pathname === '/tv-success' });
+  const path = useRouterState({ select: s => s.location.pathname });
+  useEffect(() => {
+    if (isTvCheckout) return;
+    const run = () => { void startPdfAttribution(); };
+    run();
+    window.addEventListener('orbitra-consent-changed', run);
+    window.addEventListener('storage', run);
+    return () => { window.removeEventListener('orbitra-consent-changed', run); window.removeEventListener('storage', run); };
+  }, [path, isTvCheckout]);
   return (
     <QueryClientProvider client={queryClient}>
       <CartProvider>

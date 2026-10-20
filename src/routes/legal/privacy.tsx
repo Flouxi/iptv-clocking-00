@@ -9,7 +9,7 @@ export const Route = createFileRoute("/legal/privacy")({
     ],
   }),
   component: () => (
-    <LegalLayout title="Política de privacidad" updated="2026-06-13">
+    <LegalLayout title="Política de privacidad" updated="2026-10-20">
       <p>
         IPNORD4K.COM («nosotros») respeta tu privacidad. Esta política explica qué información recopilamos cuando visitas el sitio o compras nuestros productos digitales, cómo la utilizamos y cuáles son tus derechos según el Reglamento General de Protección de Datos de la UE (RGPD).
       </p>
@@ -62,6 +62,8 @@ export const Route = createFileRoute("/legal/privacy")({
         <strong>Nunca vendemos tus datos personales a terceros.</strong>
       </p>
 
+      <p>Con tu permiso para la analítica opcional, nuestra instalación privada de Orbitra registra identificadores aleatorios de visita, campaña, idioma y una firma de red que cambia cada día. No guarda direcciones IP completas ni datos de contacto en la base analítica. Stripe confirma las conversiones mediante eventos firmados; una página de confirmación por sí sola no cuenta como compra. Wasmer aloja el servicio PHP y Turso almacena sus datos en una base gestionada en Irlanda.</p>
+      <p>Las visitas sin compra se conservan durante 90 días por defecto. La atribución de pedidos y sus ajustes de reembolso se conservan como historial de la compra.</p>
       <h2>6. Plazo de conservación</h2>
       <p>
         Los datos de los pedidos se conservan durante 7 años según la legislación contable sueca. Las comunicaciones de asistencia se eliminan después de 24 meses.

@@ -4,6 +4,7 @@ import { useState } from "react";
 import { formatPrice, getCategoryLabel, getProduct, PRODUCTS } from "@/lib/products";
 import { useCart } from "@/lib/cart";
 import { ProductCard } from "@/components/ProductCard";
+import { pdfAttributionId } from "@/lib/orbitra-attribution";
 import { createCheckoutSession } from "@/lib/checkout.functions";
 
 export const Route = createFileRoute("/product/$slug")({
@@ -60,7 +61,7 @@ function ProductPage() {
     setError(null);
     setBuying(true);
     try {
-      const { url } = await createCheckoutSession({ data: { slug: product.slug } });
+      const { url } = await createCheckoutSession({ data: { slug: product.slug, orbitraClickId: pdfAttributionId() } });
       window.location.href = url;
     } catch (e) {
       setError(e instanceof Error ? e.message : "No se pudo iniciar el pago");

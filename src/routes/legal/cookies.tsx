@@ -9,7 +9,7 @@ export const Route = createFileRoute("/legal/cookies")({
     ],
   }),
   component: () => (
-    <LegalLayout title="Política de cookies" updated="2026-06-13">
+    <LegalLayout title="Política de cookies" updated="2026-10-20">
       <h2>1. ¿Qué son las cookies?</h2>
       <p>
         Las cookies son pequeños archivos de texto que se guardan en tu navegador al visitar un sitio web. Permiten que el sitio funcione, recordar tus preferencias y analizar el tráfico.
@@ -41,7 +41,7 @@ export const Route = createFileRoute("/legal/cookies")({
       <h3>Cookies analíticas (opcionales)</h3>
       <ul>
         <li>
-          <strong>Google Analytics</strong> — nos ayuda a entender cómo se utiliza el sitio para mejorarlo. Solo se activa al pulsar «Aceptar todas».
+          <strong>Orbitra Analytics</strong> — mide visitas y compras PDF atribuidas a campañas. Solo se activa al pulsar «Aceptar todas» y respeta las señales Global Privacy Control y Do Not Track. Guarda un identificador aleatorio en el almacenamiento de sesión durante un máximo de 30 minutos; no añade datos de contacto a las URL.
         </li>
       </ul>
 
@@ -49,6 +49,7 @@ export const Route = createFileRoute("/legal/cookies")({
       <p>
         Puedes retirar tu consentimiento en cualquier momento borrando las cookies de este sitio en tu navegador. El aviso de consentimiento volverá a aparecer.
       </p>
+      <button type="button" className="text-primary underline" onClick={() => { localStorage.setItem('ipnord4k:cookie-consent:v1', 'essential'); window.dispatchEvent(new Event('orbitra-consent-changed')); window.alert('Analítica opcional desactivada.'); }}>Desactivar analítica opcional</button>
       <p>Cómo gestionar las cookies en los navegadores más habituales:</p>
       <ul>
         <li>

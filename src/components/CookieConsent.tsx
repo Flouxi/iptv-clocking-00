@@ -18,6 +18,7 @@ export function CookieConsent() {
   const set = (value: "accepted" | "essential") => {
     try {
       localStorage.setItem(STORAGE_KEY, value);
+      window.dispatchEvent(new Event('orbitra-consent-changed'));
     } catch {
       /* ignore */
     }

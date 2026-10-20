@@ -80,6 +80,12 @@ async function handleCheckoutApi(request: Request): Promise<Response | null> {
       });
     }
 
+    // A checkout must identify the actual purchased product. Never substitute a
+    // PDF using only a matching TV price from another website.
+    if (typeof productSlug !== 'string' || !productSlug) {
+      return new Response(JSON.stringify({ error: 'El producto comprado debe indicarse explícitamente.' }), { status: 400, headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' } });
+    }
+    const orbitraClickId = typeof body.orbitraClickId === 'string' && /^[0-9a-f]{48}$/.test(body.orbitraClickId) ? body.orbitraClickId : undefined;
     // Validate inputs
     if (!price || typeof price !== "number") {
       return new Response(
@@ -136,7 +142,7 @@ async function handleCheckoutApi(request: Request): Promise<Response | null> {
       cancelUrl,
       customerEmail: customerEmail || undefined,
       additionalLineItems,
-      metadata: { product_slug: product.slug, extra_screens: String(extraScreens) },
+      metadata: { product_slug: product.slug, extra_screens: String(extraScreens), order_kind: 'pdf_download', source_site: url.origin, ...(orbitraClickId ? { orbitra_click_id: orbitraClickId } : {}) },
     });
 
     return new Response(

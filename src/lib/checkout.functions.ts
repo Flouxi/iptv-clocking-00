@@ -4,6 +4,7 @@ import { getProduct } from "./products";
 
 interface CreateCheckoutInput {
   slug: string;
+  orbitraClickId?: string;
 }
 
 /**
@@ -17,7 +18,7 @@ export const createCheckoutSession = createServerFn({ method: "POST" })
     if (!data?.slug || typeof data.slug !== "string") {
       throw new Error("Invalid product slug");
     }
-    return data;
+    return { slug: data.slug, orbitraClickId: typeof data.orbitraClickId === 'string' && /^[0-9a-f]{48}$/.test(data.orbitraClickId) ? data.orbitraClickId : undefined };
   })
   .handler(async ({ data }) => {
     const product = getProduct(data.slug);
@@ -49,6 +50,9 @@ export const createCheckoutSession = createServerFn({ method: "POST" })
     const synced = await syncProductToStripe(product);
     form.append("line_items[0][price]", synced.priceId);
     form.append("metadata[product_slug]", product.slug);
+    form.append("metadata[order_kind]", "pdf_download");
+    form.append("metadata[source_site]", origin);
+    if (data.orbitraClickId) form.append("metadata[orbitra_click_id]", data.orbitraClickId);
 
     const res = await fetch("https://api.stripe.com/v1/checkout/sessions", {
       method: "POST",
