@@ -98,11 +98,7 @@ function SuccessPage() {
           </div>
           <h1 className="mt-5 text-3xl font-bold sm:text-4xl">¡Gracias por tu compra!</h1>
           <p className="mt-3 text-muted-foreground">
-            Tu pago está confirmado. Hemos enviado una copia del recibo y el enlace de descarga a{" "}
-            <span className="font-semibold text-foreground">
-              {order.customer_email ?? "tu correo electrónico"}
-            </span>
-            .
+            Tu pago está confirmado. Descarga el PDF aquí y guarda una copia en tu dispositivo. Conserva esta página de confirmación para volver a acceder durante el plazo de descarga.
           </p>
         </div>
 
@@ -137,7 +133,7 @@ function SuccessPage() {
         </a>
 
         <p className="mt-4 text-center text-xs text-muted-foreground">
-          Tu enlace de descarga está disponible inmediatamente y es válido durante 30 días.
+          Tu enlace de descarga está disponible inmediatamente y es válido durante 30 días desde la compra.
         </p>
 
         <div className="mt-8 flex justify-center gap-3">

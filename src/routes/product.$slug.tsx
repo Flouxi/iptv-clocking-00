@@ -93,11 +93,11 @@ function ProductPage() {
             <img src={product.image} alt={product.name} className="aspect-[4/3] w-full object-cover" />
           </div>
           <div className="mt-3 grid grid-cols-3 gap-3">
-            {[product.image, product.image, product.image].map((src, i) => (
+            {(product.previews ?? [{src: product.image, page: 1}]).map(({src, page}, i) => (
               <figure key={i} className="overflow-hidden rounded-lg border border-border bg-card">
-                <img src={src} alt={`Vista previa ${i + 1}`} className="aspect-square w-full object-cover opacity-80 hover:opacity-100" />
+                <img src={src} alt={`Página ${page} del PDF ${product.name}`} className="aspect-square w-full object-contain bg-muted p-2" />
                 <figcaption className="px-2 py-1 text-center text-[10px] text-muted-foreground">
-                  Página {i + 1}
+                  Página {page}
                 </figcaption>
               </figure>
             ))}

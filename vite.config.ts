@@ -14,6 +14,7 @@ export default defineConfig({
   },
   nitro: {
     preset: "vercel",
+    serverAssets: [{ baseName: 'pdf-products', dir: './private-products' }],
   },
   vite: {
     build: {

@@ -1,59 +1,27 @@
-import { createServerFn } from "@tanstack/react-start";
-
-interface FetchOrderInput {
-  sessionId: string;
-}
-
-/**
- * Called by the /success page after Stripe redirects.
- * Verifies the session with Stripe, marks the order as paid, and returns it.
- */
-export const fetchOrderBySession = createServerFn({ method: "POST" })
-  .inputValidator((data: FetchOrderInput) => {
-    if (!data?.sessionId || typeof data.sessionId !== "string") {
-      throw new Error("Missing session id");
-    }
-    return data;
+import { createServerFn } from '@tanstack/react-start';
+// Stripe remains authoritative even when the optional order database is unavailable.
+export const fetchOrderBySession = createServerFn({method:'POST'})
+  .inputValidator((data:{sessionId:string}) => {
+    if (!/^cs_(live|test)_[A-Za-z0-9]{20,200}$/.test(data?.sessionId || '')) throw new Error('Sesión no válida.');
+    return {sessionId:data.sessionId};
   })
-  .handler(async ({ data }) => {
-    const stripeKey = process.env.STRIPE_SECRET_KEY;
-    if (!stripeKey) throw new Error("Stripe is not configured");
-
-    const res = await fetch(
-      `https://api.stripe.com/v1/checkout/sessions/${encodeURIComponent(data.sessionId)}`,
-      { headers: { Authorization: `Bearer ${stripeKey}` } },
-    );
-    if (!res.ok) throw new Error("Could not verify payment");
-    const session = (await res.json()) as {
-      id: string;
-      payment_status: string;
-      customer_details?: { email?: string };
-      amount_total?: number;
-    };
-
+  .handler(async ({data}) => {
+    const { verifiedPdfOrder, issueDownload, downloadSecret, DownloadDenied } = await import('./pdf-access.server');
     try {
-    const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
-
-    if (session.payment_status === "paid") {
-      await supabaseAdmin
-        .from("orders")
-        .update({
-          status: "paid",
-          customer_email: session.customer_details?.email ?? null,
-          amount_total: session.amount_total ?? undefined,
-        })
-        .eq("stripe_session_id", session.id);
-    }
-
-    const { data: order } = await supabaseAdmin
-      .from("orders")
-      .select("id, product_slug, product_name, amount_total, currency, status, customer_email, download_token, created_at")
-      .eq("stripe_session_id", session.id)
-      .maybeSingle();
-
-    return { order, paid: session.payment_status === "paid" };
-    } catch {
-      // Stripe is authoritative even when the optional order database is unavailable.
-      return { order: null, paid: session.payment_status === "paid" };
+      const {file,expires,session} = await verifiedPdfOrder(data.sessionId);
+      // Preserve the existing optional order ledger; its availability does not grant access.
+      if (process.env.SUPABASE_URL && process.env.SUPABASE_SERVICE_ROLE_KEY) {
+        try {
+          const {supabaseAdmin} = await import('@/integrations/supabase/client.server');
+          await supabaseAdmin.from('orders').update({status:'paid',amount_total:session.amount_total,
+            customer_email:session.customer_details?.email ?? null}).eq('stripe_session_id',session.id);
+        } catch { /* Stripe remains the payment authority if the optional ledger is unavailable. */ }
+      }
+      return {paid:true,order:{id:session.id.replace(/^cs_(live|test)_/,''),product_slug:file.slug,product_name:file.title,
+        amount_total:session.amount_total,currency:session.currency,status:'paid',
+        download_token:issueDownload(session.id,expires,downloadSecret()),customer_email:null}};
+    } catch(error) {
+      if(error instanceof DownloadDenied) return {paid:false,order:null};
+      throw new Error('No se pudo verificar el pago. Inténtalo de nuevo o contacta con soporte.');
     }
   });

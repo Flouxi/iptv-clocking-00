@@ -35,3 +35,6 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Paid PDF files are private deployment assets, never public repository files.
+/private-products/

@@ -1,0 +1,301 @@
+[
+  {
+    "slug": "starter-business-planner",
+    "title": "Planificador para iniciar tu negocio",
+    "pages": 30,
+    "bytes": 242708,
+    "sha256": "bede5e92f64aaa9498e6c95047193af974e04de7fd71622234c756819e510817",
+    "image": "/product-previews/starter-business-planner-cover.webp",
+    "previews": [
+      {
+        "src": "/product-previews/starter-business-planner-page-1.webp",
+        "page": 1
+      },
+      {
+        "src": "/product-previews/starter-business-planner-page-4.webp",
+        "page": 4
+      },
+      {
+        "src": "/product-previews/starter-business-planner-page-5.webp",
+        "page": 5
+      }
+    ],
+    "tools": 27
+  },
+  {
+    "slug": "social-media-content-calendar",
+    "title": "Calendario completo de contenidos para redes sociales",
+    "pages": 45,
+    "bytes": 200042,
+    "sha256": "944b634d4eed26a3dd7228c33ac57b7d8f94af697809259f477674028fdd56ae",
+    "image": "/product-previews/social-media-content-calendar-cover.webp",
+    "previews": [
+      {
+        "src": "/product-previews/social-media-content-calendar-page-1.webp",
+        "page": 1
+      },
+      {
+        "src": "/product-previews/social-media-content-calendar-page-5.webp",
+        "page": 5
+      },
+      {
+        "src": "/product-previews/social-media-content-calendar-page-6.webp",
+        "page": 6
+      }
+    ],
+    "tools": 41
+  },
+  {
+    "slug": "small-business-starter-kit",
+    "title": "Kit de inicio para pequeñas empresas",
+    "pages": 55,
+    "bytes": 419379,
+    "sha256": "344e360adfe254f0c349f1da8499b64c82676ed98dbfa71e3c15aaaaf4230e96",
+    "image": "/product-previews/small-business-starter-kit-cover.webp",
+    "previews": [
+      {
+        "src": "/product-previews/small-business-starter-kit-page-1.webp",
+        "page": 1
+      },
+      {
+        "src": "/product-previews/small-business-starter-kit-page-5.webp",
+        "page": 5
+      },
+      {
+        "src": "/product-previews/small-business-starter-kit-page-6.webp",
+        "page": 6
+      }
+    ],
+    "tools": 51
+  },
+  {
+    "slug": "freelancer-finance-pack",
+    "title": "Paquete financiero para autónomos",
+    "pages": 60,
+    "bytes": 524823,
+    "sha256": "ad7f8b3cc1b1237fb485e33f39f95d8e04b8df348e1b9361261430f05eea4702",
+    "image": "/product-previews/freelancer-finance-pack-cover.webp",
+    "previews": [
+      {
+        "src": "/product-previews/freelancer-finance-pack-page-1.webp",
+        "page": 1
+      },
+      {
+        "src": "/product-previews/freelancer-finance-pack-page-5.webp",
+        "page": 5
+      },
+      {
+        "src": "/product-previews/freelancer-finance-pack-page-6.webp",
+        "page": 6
+      }
+    ],
+    "tools": 56
+  },
+  {
+    "slug": "annual-goal-project-planner",
+    "title": "Planificador anual de objetivos y proyectos",
+    "pages": 60,
+    "bytes": 456162,
+    "sha256": "fd606f786e5042738edf033234f3815b3d886a5919e2acedc6ca26a182446e10",
+    "image": "/product-previews/annual-goal-project-planner-cover.webp",
+    "previews": [
+      {
+        "src": "/product-previews/annual-goal-project-planner-page-1.webp",
+        "page": 1
+      },
+      {
+        "src": "/product-previews/annual-goal-project-planner-page-5.webp",
+        "page": 5
+      },
+      {
+        "src": "/product-previews/annual-goal-project-planner-page-6.webp",
+        "page": 6
+      }
+    ],
+    "tools": 56
+  },
+  {
+    "slug": "restaurant-business-forms",
+    "title": "Paquete de formularios para restaurantes",
+    "pages": 70,
+    "bytes": 927181,
+    "sha256": "58a702dbb116f0e4ab6bb9b08498c23116f0dbb1b9831d728d867c067470df94",
+    "image": "/product-previews/restaurant-business-forms-cover.webp",
+    "previews": [
+      {
+        "src": "/product-previews/restaurant-business-forms-page-1.webp",
+        "page": 1
+      },
+      {
+        "src": "/product-previews/restaurant-business-forms-page-6.webp",
+        "page": 6
+      },
+      {
+        "src": "/product-previews/restaurant-business-forms-page-7.webp",
+        "page": 7
+      }
+    ],
+    "tools": 65
+  },
+  {
+    "slug": "real-estate-client-forms",
+    "title": "Paquete de formularios para clientes inmobiliarios",
+    "pages": 65,
+    "bytes": 838498,
+    "sha256": "227944593be0bd321a2debc219374ed726fabcd54aceff4b8c27ffa853bbbb8e",
+    "image": "/product-previews/real-estate-client-forms-cover.webp",
+    "previews": [
+      {
+        "src": "/product-previews/real-estate-client-forms-page-1.webp",
+        "page": 1
+      },
+      {
+        "src": "/product-previews/real-estate-client-forms-page-6.webp",
+        "page": 6
+      },
+      {
+        "src": "/product-previews/real-estate-client-forms-page-7.webp",
+        "page": 7
+      }
+    ],
+    "tools": 60
+  },
+  {
+    "slug": "complete-hr-starter-kit",
+    "title": "Kit completo de recursos humanos",
+    "pages": 90,
+    "bytes": 1156254,
+    "sha256": "52e029873f09b9bc006e3357f27b778679957b734409c0ba2f67ef4e24cd76c2",
+    "image": "/product-previews/complete-hr-starter-kit-cover.webp",
+    "previews": [
+      {
+        "src": "/product-previews/complete-hr-starter-kit-page-1.webp",
+        "page": 1
+      },
+      {
+        "src": "/product-previews/complete-hr-starter-kit-page-6.webp",
+        "page": 6
+      },
+      {
+        "src": "/product-previews/complete-hr-starter-kit-page-7.webp",
+        "page": 7
+      }
+    ],
+    "tools": 85
+  },
+  {
+    "slug": "ecommerce-business-toolkit",
+    "title": "Kit de herramientas para comercio electrónico",
+    "pages": 80,
+    "bytes": 1030187,
+    "sha256": "5da03d0496b238ac69e92b8b936638f804344b7a565946cb520a09c12cb2e995",
+    "image": "/product-previews/ecommerce-business-toolkit-cover.webp",
+    "previews": [
+      {
+        "src": "/product-previews/ecommerce-business-toolkit-page-1.webp",
+        "page": 1
+      },
+      {
+        "src": "/product-previews/ecommerce-business-toolkit-page-6.webp",
+        "page": 6
+      },
+      {
+        "src": "/product-previews/ecommerce-business-toolkit-page-7.webp",
+        "page": 7
+      }
+    ],
+    "tools": 75
+  },
+  {
+    "slug": "marketing-agency-client-pack",
+    "title": "Paquete de clientes para agencias de marketing",
+    "pages": 85,
+    "bytes": 1083431,
+    "sha256": "fc3e5cc7cb4eb9a13eb27052f13718c613dbea2c95468b06da9bf5741b6d179c",
+    "image": "/product-previews/marketing-agency-client-pack-cover.webp",
+    "previews": [
+      {
+        "src": "/product-previews/marketing-agency-client-pack-page-1.webp",
+        "page": 1
+      },
+      {
+        "src": "/product-previews/marketing-agency-client-pack-page-6.webp",
+        "page": 6
+      },
+      {
+        "src": "/product-previews/marketing-agency-client-pack-page-7.webp",
+        "page": 7
+      }
+    ],
+    "tools": 80
+  },
+  {
+    "slug": "ultimate-entrepreneur-bundle",
+    "title": "Paquete completo para emprendedores",
+    "pages": 120,
+    "bytes": 882565,
+    "sha256": "d6d7a3c28fed57dc3472cfbfd467de46418c18540704f0f235bb9c666db7c67e",
+    "image": "/product-previews/ultimate-entrepreneur-bundle-cover.webp",
+    "previews": [
+      {
+        "src": "/product-previews/ultimate-entrepreneur-bundle-page-1.webp",
+        "page": 1
+      },
+      {
+        "src": "/product-previews/ultimate-entrepreneur-bundle-page-7.webp",
+        "page": 7
+      },
+      {
+        "src": "/product-previews/ultimate-entrepreneur-bundle-page-8.webp",
+        "page": 8
+      }
+    ],
+    "tools": 114
+  },
+  {
+    "slug": "premium-brand-identity-workbook",
+    "title": "Cuaderno premium de identidad de marca",
+    "pages": 95,
+    "bytes": 1205725,
+    "sha256": "554cfdb5b8e83c49100109ae92d2561f4c5584b33caf7c7760ca11eff95b95b5",
+    "image": "/product-previews/premium-brand-identity-workbook-cover.webp",
+    "previews": [
+      {
+        "src": "/product-previews/premium-brand-identity-workbook-page-1.webp",
+        "page": 1
+      },
+      {
+        "src": "/product-previews/premium-brand-identity-workbook-page-6.webp",
+        "page": 6
+      },
+      {
+        "src": "/product-previews/premium-brand-identity-workbook-page-7.webp",
+        "page": 7
+      }
+    ],
+    "tools": 90
+  },
+  {
+    "slug": "full-business-launch-kit",
+    "title": "Kit completo para lanzar tu empresa",
+    "pages": 150,
+    "bytes": 1096157,
+    "sha256": "978f7f7b7389df572525ba61b495ac6c37b3ad54aceedfc41f74fe2b526c1713",
+    "image": "/product-previews/full-business-launch-kit-cover.webp",
+    "previews": [
+      {
+        "src": "/product-previews/full-business-launch-kit-page-1.webp",
+        "page": 1
+      },
+      {
+        "src": "/product-previews/full-business-launch-kit-page-8.webp",
+        "page": 8
+      },
+      {
+        "src": "/product-previews/full-business-launch-kit-page-9.webp",
+        "page": 9
+      }
+    ],
+    "tools": 143
+  }
+]

@@ -1,3 +1,4 @@
+import pdfCatalog from "./pdf-catalog.json";
 import planner from "@/assets/product-planner.jpg";
 import finance from "@/assets/product-finance.jpg";
 import marketing from "@/assets/product-marketing.jpg";
@@ -40,6 +41,7 @@ export interface Product {
   features: string[];
   popular?: boolean;
   fileSizeMb?: number;
+  previews?: { src: string; page: number }[];
 }
 
 // Spanish World Cup 2026 Plans
@@ -128,7 +130,7 @@ export const SPANISH_WORLD_CUP_PLANS: Product[] = [
   },
 ];
 
-export const PRODUCTS: Product[] = [
+const CATALOG_PRODUCTS: Product[] = [
   {
     slug: "starter-business-planner",
     name: "Planificador para iniciar tu negocio",
@@ -186,8 +188,8 @@ export const PRODUCTS: Product[] = [
     pages: 60,
     short: "Contratos, facturas y hojas de gastos para profesionales autónomos.",
     description:
-      "Un paquete financiero completo para tu actividad: modelos de contrato, facturas profesionales y hojas de gastos claras.",
-    features: ["Contratos con clientes", "Plantillas de facturas", "Seguimiento de gastos", "Cálculo de impuestos"],
+      "Un paquete financiero completo para tu actividad: esquemas contractuales y de facturación para adaptar, hojas de gastos y estimaciones manuales.",
+    features: ["Contratos con clientes", "Plantillas de facturas", "Seguimiento de gastos", "Hojas manuales de estimación fiscal"],
   },
   {
     slug: "annual-goal-project-planner",
@@ -231,8 +233,8 @@ export const PRODUCTS: Product[] = [
     pages: 65,
     short: "Documentación completa para agentes inmobiliarios.",
     description:
-      "Contratos con clientes, informes de visitas, formularios de ofertas y plantillas de seguimiento, preparados para el mercado inmobiliario sueco.",
-    features: ["Contratos de servicios", "Informes de visitas", "Formularios de ofertas", "CRM-mallar"],
+      "Contratos con clientes, informes de visitas, formularios de ofertas y plantillas de seguimiento, en español para adaptar a tu mercado. Incluye esquemas contractuales sujetos a revisión jurídica local.",
+    features: ["Contratos de servicios", "Informes de visitas", "Formularios de ofertas", "Seguimiento de clientes"],
   },
   {
     slug: "complete-hr-starter-kit",
@@ -246,8 +248,8 @@ export const PRODUCTS: Product[] = [
     pages: 90,
     short: "Formularios de contratación, contratos y acogida de empleados.",
     description:
-      "Organiza los recursos humanos de tu empresa con contratos de trabajo, listas de incorporación y plantillas de evaluación.",
-    features: ["Contratos de trabajo", "Paquete de incorporación", "Evaluaciones de desempeño", "Documentos de políticas"],
+      "Organiza los recursos humanos de tu empresa con esquemas de condiciones laborales para revisión, listas de incorporación y plantillas de evaluación.",
+    features: ["Esquemas de condiciones laborales para revisión", "Paquete de incorporación", "Evaluaciones de desempeño", "Documentos de políticas"],
   },
   {
     slug: "ecommerce-business-toolkit",
@@ -259,10 +261,10 @@ export const PRODUCTS: Product[] = [
     rating: 4.8,
     reviews: 134,
     pages: 80,
-    short: "80 formularios PDF imprimibles para tiendas online.",
+    short: "80 páginas PDF para organizar tu tienda online.",
     description:
       "Todo lo que necesitas para gestionar una tienda online rentable: inventario, devoluciones, plantillas de marketing y mucho más.",
-    features: ["80 formularios PDF", "Gestión de devoluciones", "Control de inventario", "Plantillas de campañas"],
+    features: ["80 páginas PDF rellenables", "Gestión de devoluciones", "Control de inventario", "Plantillas de campañas"],
   },
   {
     slug: "marketing-agency-client-pack",
@@ -294,7 +296,7 @@ export const PRODUCTS: Product[] = [
     short: "Más de 100 herramientas PDF imprimibles para emprendedores.",
     description:
       "Nuestra colección más completa: más de 100 herramientas PDF para la estrategia de tu empresa y sus tareas diarias.",
-    features: ["Más de 100 herramientas PDF", "Plantillas de estrategia", "Rutinas diarias", "Actualizaciones de por vida"],
+    features: ["Más de 100 herramientas PDF", "Plantillas de estrategia", "Rutinas diarias", "PDF reutilizable y rellenable"],
   },
   {
     slug: "premium-brand-identity-workbook",
@@ -324,7 +326,7 @@ export const PRODUCTS: Product[] = [
     short: "Todo lo que necesita una nueva empresa, en PDF.",
     description:
       "El kit completo para lanzar un negocio: plan de empresa, modelos legales, plan de marketing y gestión financiera.",
-    features: ["Plan de empresa", "Plantillas legales", "Plan de marketing", "Gestión financiera"],
+    features: ["Plan de empresa", "Borradores para revisión profesional", "Plan de marketing", "Gestión financiera"],
   },
   {
     slug: "iptv-mundial-24",
@@ -370,6 +372,11 @@ export const PRODUCTS: Product[] = [
     features: ["30,000+ canales", "3.5 años", "4K UHD", "Garantía 30 días"],
   },
 ];
+
+export const PRODUCTS: Product[] = CATALOG_PRODUCTS.map(product => {
+  const file = pdfCatalog.find(file => file.slug === product.slug);
+  return file ? { ...product, image: file.image, previews: file.previews, pages: file.pages, fileSizeMb: Number((file.bytes / 1048576).toFixed(2)) } : product;
+});
 
 export const formatPrice = (n: number) =>
   new Intl.NumberFormat("es-ES", { style: "currency", currency: "EUR", minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(n);

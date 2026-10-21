@@ -27,18 +27,18 @@ export const Route = createFileRoute("/legal/delivery")({
           Tras el pago, accederás directamente a una página con el enlace de descarga.
         </li>
         <li>
-          También enviaremos una copia del enlace al correo electrónico indicado al pagar.
+          Guarda la página de confirmación y una copia local del PDF. El envío automático del enlace por correo no está disponible.
         </li>
         <li>
-          El enlace de descarga es válido durante 30 días y puede utilizarse varias veces.
+          El enlace de descarga es válido durante 30 días y puede utilizarse varias veces. El pago y los reembolsos se verifican en cada descarga.
         </li>
       </ul>
 
       <h2>4. Si no has recibido tu archivo</h2>
       <ol>
-        <li>Revisa la carpeta de spam o correo no deseado.</li>
+        <li>Vuelve a la página de confirmación del pago.</li>
         <li>
-          Busca el remitente <em>noreply@ipnord4k.com</em> en tu bandeja de entrada.
+          Si el pago sigue pendiente, espera a que Stripe confirme el resultado y vuelve a cargar la página.
         </li>
         <li>
           Contacta con{" "}
