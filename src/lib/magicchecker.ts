@@ -64,7 +64,9 @@ export function shouldCheckTrafficGate(request: Request, url: URL): boolean {
     return false;
   }
 
-  return request.method === "GET" || request.method === "POST";
+  // HEAD is gated too: it is a page-level probe, and leaving it open let a
+  // client ask about the page without ever passing the filter.
+  return request.method === "GET" || request.method === "POST" || request.method === "HEAD";
 }
 
 type MagicCheckerAnswer = {
