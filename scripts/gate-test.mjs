@@ -254,7 +254,7 @@ await check("asn: blocked when an ASN header is present", () => {
   eq(v, { blocked: true, reason: "asn-blocked:14618" });
 });
 
-await check("asn: inert on plain Vercel (no ASN header)", () => {
+await check("asn: inert when no ASN header is present", () => {
   process.env.TRAFFIC_ASN_BLOCK = "14618";
   eq(classifyTraffic(uaReq(UA_CHROME), new URL(`${STORE}/`)), { blocked: false });
   eq(asnRulesAreInert(uaReq(UA_CHROME)), true);

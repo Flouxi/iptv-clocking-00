@@ -7,11 +7,11 @@
 //   2. Country    — from x-vercel-ip-country (also accepts cf-ipcountry)
 //   3. ASN        — from an ASN header IF one is present (see note below)
 //
-// ASN note: Vercel does not send an ASN header (its documented request headers
-// stop at country/region/city/lat/long/timezone/postal). ASN rules are therefore
-// inert on a plain Vercel deployment: they only fire when a proxy in front adds
-// one of ASN_HEADERS, or you supply the value yourself. Country and UA rules need
-// no extra infrastructure.
+// ASN note: Vercel's documented request headers stop at country/region/city/
+// lat/long/timezone/postal, so ASN rules were assumed to be inert here. Runtime
+// logs proved otherwise: x-vercel-ip-as-number is populated on this project
+// (observed AS36884 and AS16509), so TRAFFIC_ASN_BLOCK does take effect. The
+// header list below stays broad so a proxy in front keeps working too.
 //
 // Configuration (all optional, comma-separated):
 //   TRAFFIC_LOCAL_FILTER=off        disable this classifier entirely
@@ -183,7 +183,11 @@ export function trafficDebugEnabled(): boolean {
   return value === "1" || value === "true" || value === "on" || value === "yes";
 }
 
-/** True when ASN rules are configured but no ASN header is reaching the app. */
+/**
+ * True when ASN rules are configured but no ASN header is reaching the app.
+ * Not expected on Vercel (x-vercel-ip-as-number is present in practice) — this
+ * exists to make a silently-inert ASN rule visible.
+ */
 export function asnRulesAreInert(request: Request): boolean {
   return listEnv("TRAFFIC_ASN_BLOCK").length > 0 && requestAsn(request) === null;
 }
