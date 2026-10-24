@@ -47,6 +47,20 @@ function safeUrlFallback(): string | null {
   return raw.length > 0 ? raw : null;
 }
 
+const GATE_HOSTS_DEFAULT = "iptvnord4k.site,www.iptvnord4k.site";
+
+function gateHosts(): string[] {
+  // Only these hostnames are filtered. The payment subdomain
+  // (pay.iptvnord4k.com) serves the /tv checkout page and must never be
+  // gated — doing so bounced buyers to the store instead of the checkout.
+  // *.vercel.app deployments are likewise left alone.
+  const raw = process.env.GATE_HOSTS || GATE_HOSTS_DEFAULT;
+  return raw
+    .split(",")
+    .map((h) => h.trim().toLowerCase())
+    .filter((h) => h.length > 0);
+}
+
 function safeHostname(target: string): string | null {
   try {
     return new URL(target).hostname.toLowerCase();
@@ -61,6 +75,13 @@ function isFileExtensionRequest(pathname: string): boolean {
 }
 
 export function shouldCheckTrafficGate(request: Request, url: URL): boolean {
+  // Scope the gate to the store's own hostnames. Anything else — the payment
+  // subdomain with its /tv checkout, preview deployments, localhost — reaches
+  // the app untouched.
+  if (!gateHosts().includes(url.hostname.toLowerCase())) {
+    return false;
+  }
+
   // Own API endpoints (Stripe checkout, etc.) and static assets never need the
   // gate — they are either internal XHR (handled before the gate) or
   // subresources of a page the visitor has already been gated on.

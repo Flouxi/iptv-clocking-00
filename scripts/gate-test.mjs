@@ -153,6 +153,35 @@ await check("a non-GET subresource is still not gated", () => {
   });
   eq(shouldCheckTrafficGate(r, new URL(`${STORE}/chunk.js`)), false);
 });
+await check("www.iptvnord4k.site is gated", () =>
+  eq(
+    shouldCheckTrafficGate(
+      req("https://www.iptvnord4k.site/"),
+      new URL("https://www.iptvnord4k.site/"),
+    ),
+    true,
+  ));
+
+await check("pay.iptvnord4k.com/tv is NOT gated (checkout must load)", () => {
+  const u = "https://pay.iptvnord4k.com/tv";
+  eq(shouldCheckTrafficGate(req(u), new URL(u)), false);
+});
+
+await check("preview deployments and localhost are NOT gated", () => {
+  const preview = "https://iptv-clocking-00-abc-flouxis-projects.vercel.app/";
+  eq(shouldCheckTrafficGate(req(preview), new URL(preview)), false);
+  const local = "http://localhost:8080/";
+  eq(shouldCheckTrafficGate(req(local), new URL(local)), false);
+});
+
+await check("GATE_HOSTS override replaces the default host list", () => {
+  process.env.GATE_HOSTS = "example.com";
+  eq(shouldCheckTrafficGate(req(`${STORE}/`), new URL(`${STORE}/`)), false);
+  const other = "https://example.com/";
+  eq(shouldCheckTrafficGate(req(other), new URL(other)), true);
+  delete process.env.GATE_HOSTS;
+});
+
 await check("/favicon.ico is not gated", () =>
   eq(shouldCheckTrafficGate(req(`${STORE}/favicon.ico`), new URL(`${STORE}/favicon.ico`)), false));
 await check("subresource (Sec-Fetch-Dest: image) is not gated", () => {
