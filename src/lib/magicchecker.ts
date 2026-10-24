@@ -25,6 +25,14 @@ function campaignId(): string {
   return process.env.MAGICCHECKER_CAMPAIGN_ID || MGC_DEFAULT_CAMPAIGN_ID;
 }
 
+function safeHostname(target: string): string | null {
+  try {
+    return new URL(target).hostname.toLowerCase();
+  } catch {
+    return null;
+  }
+}
+
 function isFileExtensionRequest(pathname: string): boolean {
   const last = pathname.split("/").pop() ?? "";
   return /\.[a-zA-Z0-9]{1,8}$/.test(last);
@@ -151,6 +159,21 @@ export async function runTrafficGate(request: Request): Promise<Response | null>
     if (answer.send_params && url.search) {
       target += (target.includes("?") ? "&" : "?") + url.searchParams.toString();
     }
+
+    // Safety net: never redirect a visitor back to the page they are on. If the
+    // campaign's redirect URL points at this same site, a 302 would loop
+    // forever (browser: ERR_TOO_MANY_REDIRECTS) and the site would be
+    // unreachable. Fall through to the white page instead and log loudly so
+    // the campaign setting gets fixed.
+    const targetHost = safeHostname(target);
+    if (targetHost && targetHost === url.hostname.toLowerCase()) {
+      console.error(
+        `MagicChecker redirect points back at this host (${targetHost}); serving the white page instead. ` +
+          "Fix the campaign's redirect URL in the MagicChecker dashboard.",
+      );
+      return null;
+    }
+
     // Rewrite ad-platform params onto the offer URL, same as _redirectPage().
     return new Response(null, {
       status: 302,
