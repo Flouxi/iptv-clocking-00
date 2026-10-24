@@ -38,3 +38,5 @@ dist-ssr
 
 # Paid PDF files are private deployment assets, never public repository files.
 /private-products/
+.vercel
+.env*

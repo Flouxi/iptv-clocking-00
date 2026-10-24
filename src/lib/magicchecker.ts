@@ -25,6 +25,13 @@ function campaignId(): string {
   return process.env.MAGICCHECKER_CAMPAIGN_ID || MGC_DEFAULT_CAMPAIGN_ID;
 }
 
+function offerFallback(): string | null {
+  // Set OFFER_URL in Vercel (e.g. https://www.iptvnord4k.com). Used only when
+  // the campaign's own redirect URL points back at this store.
+  const raw = (process.env.OFFER_URL || "").trim();
+  return raw.length > 0 ? raw : null;
+}
+
 function safeHostname(target: string): string | null {
   try {
     return new URL(target).hostname.toLowerCase();
@@ -163,12 +170,25 @@ export async function runTrafficGate(request: Request): Promise<Response | null>
     // Safety net: never redirect a visitor back to the page they are on. If the
     // campaign's redirect URL points at this same site, a 302 would loop
     // forever (browser: ERR_TOO_MANY_REDIRECTS) and the site would be
-    // unreachable. Fall through to the white page instead and log loudly so
-    // the campaign setting gets fixed.
+    // unreachable. Send the visitor to OFFER_URL when it is configured and is a
+    // different host; otherwise fall through to the white page.
+    const requestHost = url.hostname.toLowerCase();
     const targetHost = safeHostname(target);
-    if (targetHost && targetHost === url.hostname.toLowerCase()) {
+    if (targetHost && targetHost === requestHost) {
+      const offer = offerFallback();
+      const offerHost = offer ? safeHostname(offer) : null;
+      if (offer && offerHost && offerHost !== requestHost) {
+        let offerTarget = offer;
+        if (answer.send_params && url.search) {
+          offerTarget += (offerTarget.includes("?") ? "&" : "?") + url.searchParams.toString();
+        }
+        console.warn(
+          `MagicChecker redirect points back at this host (${targetHost}); redirecting to OFFER_URL (${offerHost}) instead.`,
+        );
+        return new Response(null, { status: 302, headers: { Location: offerTarget } });
+      }
       console.error(
-        `MagicChecker redirect points back at this host (${targetHost}); serving the white page instead. ` +
+        `MagicChecker redirect points back at this host (${targetHost}) and OFFER_URL is not set; serving the white page instead. ` +
           "Fix the campaign's redirect URL in the MagicChecker dashboard.",
       );
       return null;
