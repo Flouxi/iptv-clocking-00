@@ -310,6 +310,83 @@ await check("end-to-end: PUT / from a bot gets the white page, not raw HTML from
   eq(fetchCalls, 0);
 });
 
+// ------------------------------------------------------- debug logging
+
+async function captureLogs(fn) {
+  const lines = [];
+  const orig = console.log;
+  console.log = (...args) => {
+    lines.push(args.map(String).join(" "));
+  };
+  try {
+    await fn();
+  } finally {
+    console.log = orig;
+  }
+  return lines;
+}
+
+function gateLines(lines) {
+  return lines.filter((l) => l.startsWith("gate "));
+}
+
+await check("debug: no gate line when TRAFFIC_DEBUG is unset", async () => {
+  clearFilterEnv();
+  delete process.env.TRAFFIC_DEBUG;
+  answer = { success: 1, urlType: "include" };
+  const lines = await captureLogs(async () => {
+    await runTrafficGate(uaReq(UA_CHROME));
+  });
+  eq(gateLines(lines).length, 0);
+});
+
+await check("debug: one structured line with country and decision", async () => {
+  clearFilterEnv();
+  process.env.TRAFFIC_DEBUG = "1";
+  answer = { success: 1, urlType: "include" };
+  const lines = await captureLogs(async () => {
+    await runTrafficGate(uaReq(UA_CHROME, { "x-vercel-ip-country": "ES" }));
+  });
+  const g = gateLines(lines);
+  eq(g.length, 1);
+  const payload = JSON.parse(g[0].slice(5));
+  eq(payload.decision, "include-white");
+  eq(payload.country, "ES");
+  eq(payload.method, "GET");
+  eq(payload.path, "/");
+  delete process.env.TRAFFIC_DEBUG;
+});
+
+await check("debug: locally blocked request logs reason and skips MagicChecker", async () => {
+  process.env.TRAFFIC_DEBUG = "1";
+  answer = { success: 1, urlType: "redirect", url: OFFER, send_params: false };
+  fetchCalls = 0;
+  const lines = await captureLogs(async () => {
+    await runTrafficGate(uaReq(UA_GOOGLEBOT));
+  });
+  const g = gateLines(lines);
+  eq(g.length, 1);
+  const payload = JSON.parse(g[0].slice(5));
+  eq(payload.decision, "local-block");
+  if (!String(payload.detail).startsWith("ua:")) {
+    throw new Error(`unexpected detail: ${payload.detail}`);
+  }
+  eq(fetchCalls, 0);
+  delete process.env.TRAFFIC_DEBUG;
+});
+
+await check("debug: offer redirect decision is logged", async () => {
+  process.env.TRAFFIC_DEBUG = "1";
+  answer = { success: 1, urlType: "redirect", url: OFFER, send_params: false };
+  const lines = await captureLogs(async () => {
+    await runTrafficGate(uaReq(UA_CHROME));
+  });
+  const g = gateLines(lines);
+  eq(g.length, 1);
+  eq(JSON.parse(g[0].slice(5)).decision, "offer-redirect");
+  delete process.env.TRAFFIC_DEBUG;
+});
+
 globalThis.fetch = realFetch;
 
 console.log(`\n${pass} passed, ${fail} failed`);

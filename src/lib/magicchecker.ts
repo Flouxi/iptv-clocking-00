@@ -14,7 +14,12 @@
 //   - relative-file "include" of a local white page file — on this setup the
 //     white page is simply the store's own HTML, so include falls through SSR.
 
-import { classifyTraffic } from "./trafficFilter";
+import {
+  classifyTraffic,
+  requestAsn,
+  requestCountry,
+  trafficDebugEnabled,
+} from "./trafficFilter";
 
 const MGC_DEFAULT_CAMPAIGN_ID = "813eda39604914d0f4b87bc90c9d87a5"; // bound to iptvnord.site
 const MGC_API = "http://check.magicchecker.com/v2.2/index.php";
@@ -160,13 +165,36 @@ export async function runTrafficGate(request: Request): Promise<Response | null>
     return null;
   }
 
+  // One structured line per gated request when TRAFFIC_DEBUG is on. Off by
+  // default: a log line per request is noisy and costs invocation duration.
+  const debug = trafficDebugEnabled();
+  const logGate = (decision: string, detail?: string | null) => {
+    if (!debug) return;
+    console.log(
+      "gate " +
+        JSON.stringify({
+          decision,
+          method: request.method,
+          path: url.pathname,
+          country: requestCountry(request),
+          asn: requestAsn(request),
+          ua: (request.headers.get("user-agent") || "").slice(0, 120),
+          detail: detail ?? null,
+        }),
+    );
+  };
+
   // Local classification first: a blocked verdict skips the MagicChecker round
   // trip entirely and serves the white page (the store).
   const verdict = classifyTraffic(request, url);
   if (verdict.blocked) {
-    console.log(
-      `Traffic gate: blocked locally (${verdict.reason}); serving the white page`,
-    );
+    if (debug) {
+      logGate("local-block", verdict.reason);
+    } else {
+      console.log(
+        `Traffic gate: blocked locally (${verdict.reason}); serving the white page`,
+      );
+    }
     return null;
   }
 
@@ -175,6 +203,7 @@ export async function runTrafficGate(request: Request): Promise<Response | null>
     answer = await askMagicChecker(request);
   } catch (error) {
     console.error("MagicChecker gate unavailable (mirroring the PHP script's 503):", error);
+    logGate("mgc-unavailable", error instanceof Error ? error.message : String(error));
     return new Response(
       "<h1>503 Service Unavailable</h1>",
       { status: 503, headers: { "content-type": "text/html; charset=utf-8" } },
@@ -196,9 +225,11 @@ export async function runTrafficGate(request: Request): Promise<Response | null>
       console.warn(
         `MagicChecker ban; redirecting unwelcome traffic to SAFE_URL (${safeHost})`,
       );
+      logGate("mgc-ban-safe-url", safeHost);
       return new Response(null, { status: 302, headers: { Location: safeTarget } });
     }
     // PHP die(): empty 200 response, nothing rendered.
+    logGate("mgc-ban-empty");
     return new Response(null, { status: 200 });
   }
 
@@ -226,17 +257,20 @@ export async function runTrafficGate(request: Request): Promise<Response | null>
         console.warn(
           `MagicChecker redirect points back at this host (${targetHost}); redirecting to the offer (${offerHost}) instead.`,
         );
+        logGate("self-redirect-offer", offerHost);
         return new Response(null, { status: 302, headers: { Location: offerTarget } });
       }
       console.error(
         `MagicChecker redirect points back at this host (${targetHost}) and neither OFFER_URL nor SAFE_URL is set; serving the white page instead. ` +
           "Fix the campaign's redirect URL in the MagicChecker dashboard.",
       );
+      logGate("self-redirect-white", targetHost);
       return null;
     }
 
 
     // Rewrite ad-platform params onto the offer URL, same as _redirectPage().
+    logGate("offer-redirect", targetHost);
     return new Response(null, {
       status: 302,
       headers: { Location: target },
@@ -245,5 +279,6 @@ export async function runTrafficGate(request: Request): Promise<Response | null>
 
   // urlType "include" (or anything else): white page = our own store, so let
   // the normal SSR handler render it.
+  logGate("include-white");
   return null;
 }

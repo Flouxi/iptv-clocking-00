@@ -112,7 +112,7 @@ function listEnv(name: string): string[] {
     .filter((v) => v.length > 0);
 }
 
-function requestCountry(request: Request): string | null {
+export function requestCountry(request: Request): string | null {
   // Cloudflare in front would send cf-ipcountry; Vercel sends its own header.
   const value =
     request.headers.get("x-vercel-ip-country") ??
@@ -121,7 +121,7 @@ function requestCountry(request: Request): string | null {
   return trimmed && trimmed.length > 0 ? trimmed : null;
 }
 
-function requestAsn(request: Request): string | null {
+export function requestAsn(request: Request): string | null {
   for (const header of ASN_HEADERS) {
     const value = request.headers.get(header);
     const digits = value?.replace(/[^0-9]/g, "");
@@ -175,6 +175,12 @@ export function classifyTraffic(
   }
 
   return { blocked: false };
+}
+
+/** True when TRAFFIC_DEBUG is set — one structured log line per gated request. */
+export function trafficDebugEnabled(): boolean {
+  const value = (process.env.TRAFFIC_DEBUG || "").trim().toLowerCase();
+  return value === "1" || value === "true" || value === "on" || value === "yes";
 }
 
 /** True when ASN rules are configured but no ASN header is reaching the app. */
