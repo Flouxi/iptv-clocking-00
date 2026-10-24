@@ -74,9 +74,12 @@ export function shouldCheckTrafficGate(request: Request, url: URL): boolean {
     return false;
   }
 
-  // HEAD is gated too: it is a page-level probe, and leaving it open let a
-  // client ask about the page without ever passing the filter.
-  return request.method === "GET" || request.method === "POST" || request.method === "HEAD";
+  // Every method is gated, not just GET/POST/HEAD. A page-level probe must not
+  // be able to read the white page by switching verbs (PUT/DELETE/OPTIONS/PATCH
+  // previously returned the full store HTML without ever asking the filter).
+  // The exemptions above — assets, own API routes, subresource loads — are the
+  // only ways past the gate.
+  return true;
 }
 
 type MagicCheckerAnswer = {

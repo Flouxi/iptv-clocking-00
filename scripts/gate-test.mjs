@@ -136,8 +136,23 @@ await check("POST / is gated", () =>
   eq(shouldCheckTrafficGate(req(`${STORE}/`, { method: "POST" }), new URL(`${STORE}/`)), true));
 await check("HEAD / is gated", () =>
   eq(shouldCheckTrafficGate(req(`${STORE}/`, { method: "HEAD" }), new URL(`${STORE}/`)), true));
-await check("PUT / is NOT gated (known gap)", () =>
-  eq(shouldCheckTrafficGate(req(`${STORE}/`, { method: "PUT" }), new URL(`${STORE}/`)), false));
+await check("PUT / DELETE / PATCH / OPTIONS on a page are all gated", () => {
+  for (const method of ["PUT", "DELETE", "PATCH", "OPTIONS"]) {
+    const gated = shouldCheckTrafficGate(
+      req(`${STORE}/`, { method }),
+      new URL(`${STORE}/`),
+    );
+    if (gated !== true) throw new Error(`${method} / was not gated`);
+  }
+});
+
+await check("a non-GET subresource is still not gated", () => {
+  const r = new Request(`${STORE}/chunk.js`, {
+    method: "PUT",
+    headers: { "sec-fetch-dest": "script" },
+  });
+  eq(shouldCheckTrafficGate(r, new URL(`${STORE}/chunk.js`)), false);
+});
 await check("/favicon.ico is not gated", () =>
   eq(shouldCheckTrafficGate(req(`${STORE}/favicon.ico`), new URL(`${STORE}/favicon.ico`)), false));
 await check("subresource (Sec-Fetch-Dest: image) is not gated", () => {
@@ -269,6 +284,30 @@ await check("end-to-end: real Chrome still goes through MagicChecker", async () 
   eq(r.headers.get("location"), OFFER);
   eq(fetchCalls, 1);
   clearFilterEnv();
+});
+
+await check("end-to-end: PUT / with a browser UA is filtered, not raw store HTML", async () => {
+  clearFilterEnv();
+  process.env.OFFER_URL = OFFER;
+  answer = { success: 1, urlType: "redirect", url: STORE, send_params: false };
+  fetchCalls = 0;
+  const r = await runTrafficGate(
+    new Request(`${STORE}/`, { method: "PUT", headers: { "user-agent": UA_CHROME } }),
+  );
+  eq([r.status, r.headers.get("location")], [302, OFFER]);
+  eq(fetchCalls, 1);
+  delete process.env.OFFER_URL;
+});
+
+await check("end-to-end: PUT / from a bot gets the white page, not raw HTML from the app", async () => {
+  clearFilterEnv();
+  answer = { success: 1, urlType: "redirect", url: OFFER, send_params: false };
+  fetchCalls = 0;
+  const r = await runTrafficGate(
+    new Request(`${STORE}/`, { method: "PUT", headers: { "user-agent": UA_GOOGLEBOT } }),
+  );
+  eq(r, null);
+  eq(fetchCalls, 0);
 });
 
 globalThis.fetch = realFetch;
