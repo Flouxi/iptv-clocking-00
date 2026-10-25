@@ -5,6 +5,7 @@
 //     error logger plugins, and sandbox detection (port/host/strictPort).
 // You can pass additional config via defineConfig({ vite: { ... }, etc... }) if needed.
 import { defineConfig } from "@lovable.dev/vite-tanstack-config";
+import { builtinModules } from 'node:module';
 
 export default defineConfig({
   tanstackStart: {
@@ -15,6 +16,9 @@ export default defineConfig({
   nitro: {
     preset: "vercel",
     serverAssets: [{ baseName: 'pdf-products', dir: './private-products' }],
+    // Vercel supplies Node built-ins. Keep Stripe's bare http/https imports
+    // external instead of resolving them as npm packages in the Nitro bundle.
+    rollupConfig: { external: [...builtinModules, ...builtinModules.map(name => `node:${name}`)] },
   },
   vite: {
     build: {
