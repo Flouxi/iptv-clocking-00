@@ -8,7 +8,7 @@ export const fetchOrderBySession = createServerFn({method:'POST'})
   .handler(async ({data}) => {
     const { verifiedPdfOrder, issueDownload, downloadSecret, DownloadDenied } = await import('./pdf-access.server');
     try {
-      const {file,expires,session} = await verifiedPdfOrder(data.sessionId);
+      const {file,files,expires,session} = await verifiedPdfOrder(data.sessionId);
       // Preserve the existing optional order ledger; its availability does not grant access.
       if (process.env.SUPABASE_URL && process.env.SUPABASE_SERVICE_ROLE_KEY) {
         try {
@@ -17,9 +17,10 @@ export const fetchOrderBySession = createServerFn({method:'POST'})
             customer_email:session.customer_details?.email ?? null}).eq('stripe_session_id',session.id);
         } catch { /* Stripe remains the payment authority if the optional ledger is unavailable. */ }
       }
-      return {paid:true,order:{id:session.id.replace(/^cs_(live|test)_/,''),product_slug:file.slug,product_name:file.title,
+      return {paid:true,order:{id:session.id.replace(/^cs_(live|test)_/,''),product_slug:file.slug,product_name:files.map(f => f.title).join(', '),
         amount_total:session.amount_total,currency:session.currency,status:'paid',
-        download_token:issueDownload(session.id,expires,downloadSecret()),customer_email:null}};
+        download_token:issueDownload(session.id,expires,downloadSecret()),customer_email:null,
+        files:files.map(f => ({slug:f.slug,title:f.title}))}};
     } catch(error) {
       if(error instanceof DownloadDenied) return {paid:false,order:null};
       throw new Error('No se pudo verificar el pago. Inténtalo de nuevo o contacta con soporte.');

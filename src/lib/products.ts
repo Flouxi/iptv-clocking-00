@@ -23,7 +23,6 @@ export const CATEGORIES: { id: Category; label: string }[] = [
   { id: "hr", label: "RR. HH." },
   { id: "realestate", label: "Inmobiliaria" },
   { id: "freelancer", label: "Autónomos" },
-  { id: "iptv", label: "IPTV" },
 ];
 
 export interface Product {
@@ -373,7 +372,7 @@ const CATALOG_PRODUCTS: Product[] = [
   },
 ];
 
-export const PRODUCTS: Product[] = CATALOG_PRODUCTS.map(product => {
+export const PRODUCTS: Product[] = CATALOG_PRODUCTS.filter(product => pdfCatalog.some(file => file.slug === product.slug)).map(product => {
   const file = pdfCatalog.find(file => file.slug === product.slug);
   return file ? { ...product, image: file.image, previews: file.previews, pages: file.pages, fileSizeMb: Number((file.bytes / 1048576).toFixed(2)) } : product;
 });
@@ -385,14 +384,10 @@ export const formatPriceEUR = (n: number) =>
   formatPrice(n);
 
 export const getProduct = (slug: string) => {
-  // Check Spanish World Cup plans first
-  const wcPlan = SPANISH_WORLD_CUP_PLANS.find((p) => p.slug === slug);
-  if (wcPlan) return wcPlan;
-  // Then check regular products
   return PRODUCTS.find((p) => p.slug === slug);
 };
 
 export const getCategoryLabel = (id: Category) =>
   CATEGORIES.find((c) => c.id === id)?.label ?? id;
 
-export const getAllProducts = () => [...SPANISH_WORLD_CUP_PLANS, ...PRODUCTS];
+export const getAllProducts = () => PRODUCTS;

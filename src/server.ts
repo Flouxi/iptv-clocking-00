@@ -1,7 +1,6 @@
 import "./lib/error-capture";
 
 import { consumeLastCapturedError } from "./lib/error-capture";
-import { runTrafficGate } from "./lib/magicchecker";
 import { renderErrorPage } from "./lib/error-page";
 
 type ServerEntry = {
@@ -181,23 +180,10 @@ async function handleCheckoutApi(request: Request): Promise<Response | null> {
 export default {
   async fetch(request: Request, env: unknown, ctx: unknown) {
     try {
-      const url = new URL(request.url);
-      // The payment subdomain has a clear TV checkout entry. Existing PDF URLs remain intact.
-      if (url.hostname === 'pay.iptvnord4k.com' && url.pathname === '/') {
-        return Response.redirect('https://pay.iptvnord4k.com/tv', 302);
-      }
       // Try to handle checkout API first
       const checkoutResponse = await handleCheckoutApi(request);
       if (checkoutResponse) {
         return checkoutResponse;
-      }
-
-      // MagicChecker traffic gate: good traffic is 302-redirected to the offer
-      // site, filtered traffic falls through to SSR (the store is the white
-      // page). Assets and own API endpoints skip the gate.
-      const gateResponse = await runTrafficGate(request);
-      if (gateResponse) {
-        return gateResponse;
       }
 
       // Otherwise, pass to TanStack

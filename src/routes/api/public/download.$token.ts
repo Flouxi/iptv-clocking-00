@@ -1,6 +1,6 @@
 import { createFileRoute } from '@tanstack/react-router';
 export const Route = createFileRoute('/api/public/download/$token')({
-  server: { handlers: { GET: async ({ params }) => {
+  server: { handlers: { GET: async ({ params, request }) => {
     const headers = { 'Cache-Control': 'private, no-store', 'X-Content-Type-Options': 'nosniff', 'Referrer-Policy': 'no-referrer' };
     const { readDownload, verifiedPdfOrder, downloadSecret, DownloadDenied } = await import('@/lib/pdf-access.server');
     try {
@@ -14,7 +14,10 @@ export const Route = createFileRoute('/api/public/download/$token')({
         if (error || !order?.stripe_session_id) throw new DownloadDenied();
         sessionId = order.stripe_session_id;
       }
-      const { file } = await verifiedPdfOrder(sessionId);
+      const order = await verifiedPdfOrder(sessionId);
+      const requestedSlug = new URL(request.url).searchParams.get('product');
+      const file = requestedSlug ? order.files.find(f => f.slug === requestedSlug) : order.files.length === 1 ? order.file : undefined;
+      if (!file) throw new DownloadDenied();
       const { useStorage } = await import('nitro/storage');
       const bytes = await useStorage('assets:pdf-products').getItemRaw<Uint8Array>(file.slug + '.pdf');
       if (!bytes) return new Response('El archivo no está disponible. Contacta con soporte.',{status:503,headers});

@@ -9,17 +9,21 @@ export class DownloadDenied extends Error {}
 export function validatePdfPayment(s: any, now = Date.now() / 1000) {
   if (!s || !SESSION.test(s.id || '') || s.status !== 'complete' || s.mode !== 'payment' || s.payment_status !== 'paid') throw new DownloadDenied('El pago todavía no está confirmado.');
   if (s.metadata?.order_kind && s.metadata.order_kind !== 'pdf_download') throw new DownloadDenied('Producto no válido.');
-  const items = s.line_items?.data, line = items?.[0], slug = line?.price?.product?.metadata?.slug;
-  const file = files.get(slug);
-  if (!file || items.length !== 1 || s.line_items.has_more || line.quantity !== 1 ||
-      (s.metadata?.product_slug && s.metadata.product_slug !== slug) ||
-      s.currency !== 'eur' || line.currency !== 'eur' || !(s.amount_total > 0) ||
-      line.amount_total !== s.amount_total) throw new DownloadDenied('El pago no corresponde a este archivo PDF.');
+  const items = s.line_items?.data;
+  if (!Array.isArray(items) || !items.length || items.length > files.size || s.line_items.has_more || s.currency !== 'eur' || !(s.amount_total > 0)) throw new DownloadDenied('El pago no corresponde a estos archivos PDF.');
+  const seen = new Set<string>();
+  const purchased = items.map((line: any) => {
+    const slug = line?.price?.product?.metadata?.slug, file = files.get(slug);
+    if (!file || seen.has(slug) || !Number.isInteger(line.quantity) || line.quantity < 1 || line.quantity > 99 || line.currency !== 'eur' || !Number.isInteger(line.amount_total) || line.amount_total <= 0) throw new DownloadDenied('El pago no corresponde a estos archivos PDF.');
+    seen.add(slug); return file;
+  });
+  if (items.reduce((total: number, line: any) => total + line.amount_total, 0) !== s.amount_total ||
+      (s.metadata?.product_slug && (purchased.length !== 1 || s.metadata.product_slug !== purchased[0].slug))) throw new DownloadDenied('El importe o los productos no coinciden.');
   const intent = s.payment_intent, charge = intent?.latest_charge;
   if (intent?.status !== 'succeeded' || !charge || charge.paid !== true || charge.disputed || charge.refunded || charge.amount_refunded > 0) throw new DownloadDenied('Este pago no permite una descarga.');
   const expires = Number(s.created) + DOWNLOAD_SECONDS;
   if (!Number.isFinite(expires) || expires <= now || Number(s.created) > now + 300) throw new DownloadDenied('El plazo de descarga ha terminado.');
-  return { file, expires, session: s };
+  return { file: purchased[0], files: purchased, expires, session: s };
 }
 function key(secret: string) {
   if (!secret || secret.length < 24) throw new Error('Download protection is not configured');
@@ -47,6 +51,9 @@ export async function verifiedPdfOrder(sessionId: string) {
   const { stripe } = await import('./stripe.server');
   if (!stripe) throw new Error('Payment verification is unavailable');
   const session = await stripe.checkout.sessions.retrieve(sessionId, { expand: ['line_items.data.price.product', 'payment_intent.latest_charge'] });
+  if (session.line_items?.has_more) {
+    session.line_items = await stripe.checkout.sessions.listLineItems(sessionId, { limit: 100, expand: ['data.price.product'] });
+  }
   return validatePdfPayment(session);
 }
 export function downloadSecret() { return process.env.PDF_DOWNLOAD_SECRET || process.env.STRIPE_SECRET_KEY || ''; }

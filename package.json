@@ -9,6 +9,7 @@
     "build:dev": "node scripts/verify-pdf-assets.mjs && vite build --mode development",
     "preview": "vite preview",
     "lint": "eslint .",
+    "test:checkout": "node scripts/pdf-checkout-test.mjs",
     "test:gate": "node --experimental-strip-types --loader ./scripts/ts-resolve.mjs scripts/gate-test.mjs",
     "test:live": "node scripts/live-matrix.mjs",
     "format": "prettier --write ."

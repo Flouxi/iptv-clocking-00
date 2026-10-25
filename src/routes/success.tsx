@@ -22,6 +22,7 @@ interface Order {
   status: string;
   customer_email: string | null;
   download_token: string;
+  files?: { slug: string; title: string }[];
 }
 
 function SuccessPage() {
@@ -125,12 +126,13 @@ function SuccessPage() {
           </dl>
         </div>
 
-        <a
-          href={`/api/public/download/${order.download_token}`}
+        {(order.files ?? [{ slug: order.product_slug, title: order.product_name }]).map(file => <a
+          key={file.slug}
+          href={`/api/public/download/${order.download_token}?product=${encodeURIComponent(file.slug)}`}
           className="mt-6 flex w-full items-center justify-center gap-2 rounded-md bg-primary px-6 py-4 text-base font-semibold text-primary-foreground transition hover:opacity-90"
         >
-          <Download className="h-5 w-5" /> Descargar tu PDF
-        </a>
+          <Download className="h-5 w-5" /> Descargar: {file.title}
+        </a>)}
 
         <p className="mt-4 text-center text-xs text-muted-foreground">
           Tu enlace de descarga está disponible inmediatamente y es válido durante 30 días desde la compra.
