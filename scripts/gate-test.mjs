@@ -124,12 +124,55 @@ await check("ban=1, no SAFE_URL -> empty 200", async () => {
   eq([r.status, r.headers.get("location")], [200, null]);
 });
 
-await check("MagicChecker unreachable -> 503", async () => {
+await check("MagicChecker unreachable -> serves the store (no 503 by default)", async () => {
   delete process.env.SAFE_URL;
+  delete process.env.GATE_MGC_FAILURE;
   fetchThrows = true;
   const r = await runTrafficGate(req(`${STORE}/`));
   fetchThrows = false;
+  eq(r, null);
+});
+
+await check("MagicChecker unreachable + GATE_MGC_FAILURE=offer -> 302 to the offer, params kept", async () => {
+  process.env.OFFER_URL = OFFER;
+  process.env.GATE_MGC_FAILURE = "offer";
+  fetchThrows = true;
+  const r = await runTrafficGate(req(`${STORE}/?px=9&utm_source=fb`));
+  fetchThrows = false;
+  delete process.env.GATE_MGC_FAILURE;
+  eq(r.status, 302);
+  const target = new URL(r.headers.get("location"));
+  eq(target.origin, new URL(OFFER).origin);
+  if (!target.search.includes("px=9")) throw new Error(`lost px param: ${target.search}`);
+});
+
+await check("MagicChecker unreachable + GATE_MGC_FAILURE=offer without OFFER_URL -> store, never the store's own URL as a redirect", async () => {
+  delete process.env.OFFER_URL;
+  delete process.env.SAFE_URL;
+  process.env.GATE_MGC_FAILURE = "offer";
+  fetchThrows = true;
+  const r = await runTrafficGate(req(`${STORE}/`));
+  fetchThrows = false;
+  delete process.env.GATE_MGC_FAILURE;
+  eq(r, null);
+});
+
+await check("MagicChecker unreachable + GATE_MGC_FAILURE=503 -> 503 (opt-in only)", async () => {
+  process.env.GATE_MGC_FAILURE = "503";
+  fetchThrows = true;
+  const r = await runTrafficGate(req(`${STORE}/`));
+  fetchThrows = false;
+  delete process.env.GATE_MGC_FAILURE;
   eq(r.status, 503);
+});
+
+await check("MagicChecker unreachable + unrecognised GATE_MGC_FAILURE -> store", async () => {
+  process.env.GATE_MGC_FAILURE = "yes-please";
+  fetchThrows = true;
+  const r = await runTrafficGate(req(`${STORE}/`));
+  fetchThrows = false;
+  delete process.env.GATE_MGC_FAILURE;
+  eq(r, null);
 });
 
 // ------------------------------------------------------------ gating surface

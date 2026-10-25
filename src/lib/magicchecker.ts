@@ -7,7 +7,9 @@
 //                              -> 302 to that URL (+ original query string)
 //   - {success:1, urlType:"include", ...}
 //                              -> render our own page (the store = white page)
-//   - any failure / timeout    -> 503, like the PHP script did
+//   - any failure / timeout    -> serve the store (see GATE_MGC_FAILURE); the
+//                                 PHP script answered 503, which takes the
+//                                 whole property down with the third party
 //
 // Deliberately NOT ported from the PHP script:
 //   - checkCache()/McProxy (127.0.0.1:8082 local proxy software) — not used
@@ -48,6 +50,19 @@ function safeUrlFallback(): string | null {
 }
 
 const GATE_HOSTS_DEFAULT = "iptvnord4k.site,www.iptvnord4k.site";
+
+type MgcFailurePolicy = "store" | "offer" | "503";
+
+function mgcFailurePolicy(): MgcFailurePolicy {
+  // What to serve when MagicChecker cannot answer. Default "store" keeps
+  // unclassified traffic off the offer and keeps the property up; "offer"
+  // protects revenue at the cost of forwarding anything the gate could not
+  // classify; "503" is the old PHP behaviour. Anything unrecognised -> store.
+  const raw = (process.env.GATE_MGC_FAILURE || "").trim().toLowerCase();
+  if (raw === "offer") return "offer";
+  if (raw === "503") return "503";
+  return "store";
+}
 
 function gateHosts(): string[] {
   // Only these hostnames are filtered. The payment subdomain
@@ -223,12 +238,44 @@ export async function runTrafficGate(request: Request): Promise<Response | null>
   try {
     answer = await askMagicChecker(request);
   } catch (error) {
-    console.error("MagicChecker gate unavailable (mirroring the PHP script's 503):", error);
-    logGate("mgc-unavailable", error instanceof Error ? error.message : String(error));
-    return new Response(
-      "<h1>503 Service Unavailable</h1>",
-      { status: 503, headers: { "content-type": "text/html; charset=utf-8" } },
-    );
+    const detail = error instanceof Error ? error.message : String(error);
+    const policy = mgcFailurePolicy();
+    logGate("mgc-unavailable", `${detail}; policy=${policy}`);
+
+    // Default is the store, not a 503: an unclassifiable request must never be
+    // forwarded to the offer (that is exactly the traffic the gate exists to
+    // keep away from it), and a 503 on every request turns a third-party
+    // hiccup into a dead property. A short pause in conversions is the cheaper
+    // failure. GATE_MGC_FAILURE switches the trade.
+    if (policy === "offer") {
+      const offer = offerFallback();
+      const offerHost = offer ? safeHostname(offer) : null;
+      if (offer && offerHost && offerHost !== url.hostname.toLowerCase()) {
+        let offerTarget = offer;
+        if (url.search) {
+          offerTarget += (offerTarget.includes("?") ? "&" : "?") + url.searchParams.toString();
+        }
+        console.warn(
+          `MagicChecker gate unavailable (${detail}); GATE_MGC_FAILURE=offer, redirecting to ${offerHost}`,
+        );
+        return new Response(null, { status: 302, headers: { Location: offerTarget } });
+      }
+      console.error(
+        `MagicChecker gate unavailable (${detail}) and GATE_MGC_FAILURE=offer but OFFER_URL is unset; serving the white page.`,
+      );
+      return null;
+    }
+
+    if (policy === "503") {
+      console.error(`MagicChecker gate unavailable (${detail}); GATE_MGC_FAILURE=503, serving 503.`);
+      return new Response(
+        "<h1>503 Service Unavailable</h1>",
+        { status: 503, headers: { "content-type": "text/html; charset=utf-8" } },
+      );
+    }
+
+    console.error(`MagicChecker gate unavailable (${detail}); serving the white page.`);
+    return null;
   }
 
   if (answer.ban === 1) {
