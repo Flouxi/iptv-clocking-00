@@ -1,5 +1,8 @@
 // Proves each branch of the traffic gate by stubbing the MagicChecker response.
-// Run from iptv-clocking-00:  node --experimental-strip-types scripts/gate-test.mjs
+// Run from iptv-clocking-00:  npm run test:gate
+//   (that is: node --experimental-strip-types --loader ./scripts/ts-resolve.mjs
+//    scripts/gate-test.mjs — the loader is required, because the app's source
+//    imports are extensionless and Node ESM will not resolve them without it)
 //
 // This does not touch the live campaign — it verifies what the app will do for a
 // given MagicChecker answer, so the dashboard change can be checked against it.
